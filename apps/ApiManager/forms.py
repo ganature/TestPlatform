@@ -32,3 +32,8 @@ class AddApiInfoForm(forms.Form):
     apiAddress=forms.CharField(required=False)
     requestParameterType=forms.CharField(required=False)
     description=forms.CharField(required=False)
+    
+class AddApiHead(forms.Form):
+    api_id=forms.CharField()
+    name=forms.CharField()
+    value=forms.CharField()

@@ -67,10 +67,15 @@ def Save_ApiInfo(request):
             else:
                 requestParameterTypeName="raw"
             ApiInfo.objects.create(name=apiname,httpType=httpType,requestType=requestType,apiAddress=apiAddress,requestParameterType=requestParameterTypeName,belong_project_id=project_id,belong_module_id=module_id)
-            
+            Api_id=ApiInfo.objects.filter(name=apiname).values('id')[0]['id']
     else:
         form=AddApiInfoForm()
-    return HttpResponse(json.dumps({'status':200,'message':'success','id':1}))
+    return HttpResponse(json.dumps({'status':200,'message':'success','id':Api_id}))
+
+def Save_ApiHeader(request):
+    if request.method =='POST':
+        pass
+        
                 
     
     

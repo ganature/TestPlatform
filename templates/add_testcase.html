@@ -160,21 +160,30 @@ Index
                type:'POST',
                data:$("#testcase-form").serialize(),
                dataType:"json",
-               success:function () {
-            	   
-            	   getTableData('ApiHeader')
+               success:function (data) {
+            	   SaveTableData('ApiHeader',data.id,'/api/Save_ApiHeader')
                }
 
            })
        })
 
     });
-    function getTableData(TableId){
+    function getTableData(TableId,id,url){
     	$('#'+TableId+' tr').each(function(){
     		var tdArr=$(this).children();
     		var name=tdArr.eq(1).text();
     		var value=tdArr.eq(2).text();
-    		alert(name+':'+value)
+    		if(name!=''&& value!=''&&name!="标签"){
+    			$.ajax({
+    				url:url,
+                    type:'POST',
+                    data:{'api_id':id,'name':name,'value':value},
+                    dataType:"json",
+                    success:function () {
+
+                    }
+    			});
+    		}
     	})
     }
 
