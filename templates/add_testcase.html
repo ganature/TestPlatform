@@ -161,14 +161,14 @@ Index
                data:$("#testcase-form").serialize(),
                dataType:"json",
                success:function (data) {
-            	   SaveTableData('ApiHeader',data.id,'/api/Save_ApiHeader')
+            	   SaveTableData('ApiHeader',data.id,'/api/Save_ApiHeader/')
                }
 
            })
        })
 
     });
-    function getTableData(TableId,id,url){
+    function SaveTableData(TableId,id,url){
     	$('#'+TableId+' tr').each(function(){
     		var tdArr=$(this).children();
     		var name=tdArr.eq(1).text();

@@ -4,8 +4,8 @@ Created on 2018年7月13日
 @author: Administrator
 '''
 import json
-from apps.ApiManager.models import ProjectInfo, ModuleInfo,ApiInfo
-from apps.ApiManager.forms import AddApiInfoForm
+from apps.ApiManager.models import ProjectInfo, ModuleInfo,ApiInfo,ApiHead
+from apps.ApiManager.forms import AddApiInfoForm,AddApiHead
 from django.http import HttpResponse
 
 def get_project(request):
@@ -50,6 +50,7 @@ def get_module(request):
         return HttpResponse(json.dumps({'status':200,'message':'success','value':module_list}))
     
 def Save_ApiInfo(request):
+    #后续要补上不允许api名字相同
     if request.method =='POST':
         form=AddApiInfoForm(request.POST)
         if form.is_valid():
@@ -74,8 +75,16 @@ def Save_ApiInfo(request):
 
 def Save_ApiHeader(request):
     if request.method =='POST':
-        pass
-        
+        form=AddApiHead(request.POST)
+        print(form)
+        if form.is_valid():
+            api_id=form.cleaned_data['api_id']
+            name=form.cleaned_data['name']
+            value=form.cleaned_data['value']
+            ApiHead.objects.create(belong_Api_id=api_id,name=name,value=value)
+    else:
+        form=AddApiInfoForm()
+    return HttpResponse(json.dumps({'status':200}))
                 
     
     
