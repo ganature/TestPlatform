@@ -16,12 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 import xadmin
-from ApiManager import views as ApiManager_views
+from apps.ApiManager import views as ApiManager_views
 urlpatterns = [
     path('admin/', xadmin.site.urls),
     path('index/',ApiManager_views.index),
     path('api_get/',ApiManager_views.api_get),
-    path(r'api/',include('ApiManager.urls')),
+    path(r'api/',include('apps.ApiManager.urls')),
 #     项目管理路由
     path('project_list/',ApiManager_views.project_list),
     path('add_project/',ApiManager_views.add_project_page),

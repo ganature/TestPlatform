@@ -6,6 +6,7 @@ Created on 2018年7月13日
 from django.urls import path
 from apps.ApiManager import views_api
 
+
 urlpatterns = [
     path(r'get_project/', views_api.get_project, name='get_project'),
     path(r'get_module/', views_api.get_module, name='get_module'),

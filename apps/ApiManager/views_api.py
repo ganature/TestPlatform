@@ -4,8 +4,8 @@ Created on 2018年7月13日
 @author: Administrator
 '''
 import json
-from ApiManager.models import ProjectInfo,ModuleInfo,ApiInfo
-from ApiManager.forms import AddApiInfoForm
+from apps.ApiManager.models import ProjectInfo, ModuleInfo,ApiInfo
+from apps.ApiManager.forms import AddApiInfoForm
 from django.http import HttpResponse
 
 def get_project(request):
