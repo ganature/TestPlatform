@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'reversion',
-    'apps.ApiManager'
+    'apps.ApiManager',
+    'captcha'
 ]
 
 MIDDLEWARE = [
