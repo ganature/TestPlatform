@@ -4,7 +4,7 @@ import xadmin
 from .models import UserProfile
 
 
- class UserProfileAdmin(object):
+class UserProfileAdmin(object):
     list_display=('nick_name','role','username')
 
 
