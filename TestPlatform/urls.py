@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path,include
 import xadmin
 from apps.ApiManager import views as ApiManager_views
+from apps.users.views import RegisterView
 urlpatterns = [
     path('admin/', xadmin.site.urls),
     path('index/',ApiManager_views.index),
@@ -36,5 +37,6 @@ urlpatterns = [
     path('del_module/',ApiManager_views.del_module),
     path('edit_module/<int:eid>/',ApiManager_views.add_module_page),
     path('edit_module/',ApiManager_views.edit_module),
-    path('add_testcase/',ApiManager_views.add_testcase_page)
+    path('add_testcase/',ApiManager_views.add_testcase_page),
+    path('regsiter/',RegisterView.as_view(),name='register')
 ]

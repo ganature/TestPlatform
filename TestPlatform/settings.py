@@ -26,7 +26,7 @@ SECRET_KEY = '+c5d#bdcyis9kj202v9b6au!icgr0yo*_wdszy-eu16-&s*539'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'reversion',
     'apps.ApiManager',
-    'captcha'
+    'captcha',
+    'apps.users'
 ]
 
 MIDDLEWARE = [
@@ -132,6 +133,8 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
+AUTH_USER_MODEL = "users.UserProfile"
 
 ADMIN_USERNAME='admin'
 ADMIN_PASSWORD='admin123'
