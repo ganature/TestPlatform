@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views.generic.base import View
 # Create your views here.
-from .forms import RegisterForm
-from .models import UserProfile
+from users.forms import RegisterForm
+from users.models import UserProfile
 
 
 class RegisterView(View):
