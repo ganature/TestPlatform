@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponseRedirect
 from django.views.generic.base import View
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 # Create your views here.
-from users.forms import RegisterForm
-from users.models import UserProfile
+from apps.users.forms import RegisterForm
+from apps.users.models import UserProfile
 
 
 class RegisterView(View):
@@ -13,13 +15,41 @@ class RegisterView(View):
         return render(request, "register.html", {'register_form': register_form})
 
     def post(self,request):
-        register_form = RegisterForm(request.POST)
-        if register_form.is_valid():
-            user_name=request.POST.get('username')
-            if UserProfile.objects.filter(username=user_name):
-                return render(request,'register.html',{'msg':'用户名已存在'})
-            pass_word=request.POST.get('password')
+        user_name=request.POST.get('username')
+        if UserProfile.objects.filter(username=user_name):
+            return render(request,'register.html',{'msg':'用户名已存在','status_code':999})
+        else:
+            pass_word=request.POST.get('password1')
             user_profile=UserProfile()
             user_profile.username=user_name
             user_profile.password=pass_word
             user_profile.save()
+            return render(request,'index.html',{'status_code':100,'msg':'用户保存成功'})
+
+class LoginView(View):
+
+    def get(self,request):
+        return render(request,'login.html')
+
+    def post(self,request):
+        name=request.COOKIES.get('name')
+        if name:
+            return render(request,'index.html')
+        user_name=request.POST.get('username')
+        pass_word = request.POST.get('password')
+        auth_login=authenticate(username=user_name,password=pass_word)
+        print(auth_login)
+        if auth_login :
+            login(request,auth_login)
+            response=HttpResponseRedirect('/index/')
+            response.set_cookie('name',user_name,60*60*24*1)
+            return response
+        else:
+            return render(request,'login.html',{'msg':'登录失败','status_code':101})
+
+def user_logout(request):
+    logout(request)
+    return render(request,'index.html')
+
+
+

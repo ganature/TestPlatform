@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'reversion',
     'apps.ApiManager',
     'captcha',
-    'apps.users'
+    'apps.users',
+    'django_forms_bootstrap'
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,6 @@ AUTH_USER_MODEL = "users.UserProfile"
 
 ADMIN_USERNAME='admin'
 ADMIN_PASSWORD='admin123'
+
+#设定登录的路由
+LOGIN_URL='/login/'
