@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/static/css/style.css">
     <script src="/static/js/bootstrap.min.js"></script>
     <link href="/static/css/bootstrap.css" rel="stylesheet" />
-  <title>测试平台用户注册</title>
+  <title>测试平台用户登录</title>
 </head>
 <body>
 <script>
@@ -17,39 +17,28 @@
 </script>
   <div class="reg_div">
       <form method="post" action="">
-          <p>用户注册</p>
+          <p>用户登录</p>
     <ul class="reg_ul">
 
       <li>
           <span>用户名：</span>
-          <input type="text" name="username" value="" placeholder="4-8位用户名" class="reg_user">
+          <input type="text" name="username" value="" placeholder="4-8位用户名" class="login_user">
           <span class="tip user_hint"></span>
       </li>
       <li>
           <span>密码：</span>
-          <input type="password" name="password1" value="" placeholder="6-16位密码" class="reg_password">
+          <input type="password" name="password" value="" placeholder="6-16位密码" class="login_password">
           <span class="tip password_hint"></span>
       </li>
       <li>
-          <span>确认密码：</span>
-          <input type="password" name="password2" value="" placeholder="确认密码" class="reg_confirm">
-          <span class="tip confirm_hint"></span>
-      </li>
-        <li>
-          <span>邮箱：</span>
-          <input type="email" name="email" value="" placeholder="邮箱" class="reg_confirm">
-          <span class="tip confirm_hint"></span>
-      </li>
-
-      <li>
-        <button type="submit" name="button" id='submit' class="red_button">注册</button>
+        <button type="submit" name="button" id='submit' class="login_button">登录</button>
       </li>
 
     </ul>
-          {% ifequal error 999 %}
+          {% ifequal status_code 999 %}
             <div class="alert alert-danger alert-dismissable">{{ msg }}</div>
             {% endifequal %}
-          {% ifequal error 100 %}
+          {% ifequal status_code 101 %}
             <div class="alert alert-success alert-dismissable">{{ msg }}</div>
         {% endifequal %}
       </form>
