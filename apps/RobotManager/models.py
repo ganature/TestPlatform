@@ -132,7 +132,7 @@ class Keyword(models.Model):
 class Resource(models.Model):
     name = models.CharField(max_length=50,verbose_name=u'Resource名称')
     doc = models.CharField(max_length=100,verbose_name=u'Resource描述')
-    module=models.ForeignKey(Module,verbose_name=u'所属模块',on_delete=models.SET_NULL,null=True,blank=True)
+    module = models.ForeignKey(Module,verbose_name=u'所属模块',on_delete=models.SET_NULL,null=True,blank=True)
     add_time = models.DateField(auto_now_add=True,verbose_name=u'创建时间')
     edit_time = models.DateField(auto_now=True,verbose_name=u'修改时间')
 
@@ -147,9 +147,10 @@ class Resource(models.Model):
 class UserKeywords(models.Model):
     name = models.CharField(max_length=50,verbose_name=u'用户关键字名称')
     doc = models.CharField(max_length=100,verbose_name=u'用户关键字描述')
-    resource=models.ForeignKey(Resource,on_delete=models.SET_NULL,null=True,blank=True,verbose_name=u'所属Resource')
-    keyword=models.ForeignKey(Keyword,on_delete=models.SET_NULL,null=True,blank=True)
-    relate_user_keyword=models.ForeignKey('self',on_delete=models.SET_NULL,null=True,blank=True,verbose_name=u'关联用户关键字')
+    resource = models.ForeignKey(Resource,on_delete=models.SET_NULL,null=True,blank=True,verbose_name=u'所属Resource')
+    keyword = models.ForeignKey(Keyword,on_delete=models.SET_NULL,null=True,blank=True)
+    relate_user_keyword = models.ForeignKey('self',on_delete=models.SET_NULL,null=True,blank=True,
+                                            verbose_name=u'关联用户关键字')
     add_time = models.DateField(auto_now_add=True,verbose_name=u'创建时间')
     edit_time = models.DateField(auto_now=True,verbose_name=u'修改时间')
 

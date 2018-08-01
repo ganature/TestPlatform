@@ -2,7 +2,7 @@
 
 import xadmin
 
-from apps.RobotManager.models import Project,Module,Cases,Suites,Steps\
+from apps.RobotManager.models import Project,Module,Cases,Suites,Steps \
     ,CasesStep,Library,Keyword,UserKeywords,Resource
 
 
@@ -19,7 +19,7 @@ class ModuleAdmin(object):
 
 
 class CasesAdmin(object):
-    list_display = ['case_num','name','type','creator','suite','expect','level' ,'detail','remark','add_time',
+    list_display = ['case_num','name','type','creator','suite','expect','level','detail','remark','add_time',
                     'edit_time']
     search_fields = ['case_num','name','suite','creator','level']
     list_filter = ['case_num','name','suite','creator','level']
@@ -42,25 +42,30 @@ class StepsAdmin(object):
     search_fields = ['step_num','name','keyword','doc']
     list_filter = ['step_num','name','keyword','doc']
 
+
 class LibraryAdmin(object):
     list_display = ['name','doc','add_time','edit_time']
     search_fields = ['name','doc']
     list_filter = ['name','doc']
+
 
 class KeywordAdmin(object):
     list_display = ['name','doc','library','add_time','edit_time']
     search_fields = ['name','doc','library']
     list_filter = ['name','doc','library']
 
+
 class ResourceAdmin(object):
     list_display = ['name','doc','module','add_time','edit_time']
     search_fields = ['name','doc','module']
     list_filter = ['name','doc','module']
 
+
 class UserKeywordsAdmin(object):
     list_display = ['name','doc','resource','add_time','edit_time']
     search_fields = ['name','doc','resource']
     list_filter = ['name','doc','resource']
+
 
 xadmin.site.register(Project,ProjectAdmin)
 xadmin.site.register(Module,ModuleAdmin)
