@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'apps.ApiManager',
     'captcha',
     'apps.users',
-    'django_forms_bootstrap'
+    'apps.RobotManager'
 ]
 
 MIDDLEWARE = [
