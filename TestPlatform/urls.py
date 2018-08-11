@@ -14,10 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path,include,re_path
+from rest_framework.documentation import include_docs_urls
+from rest_framework.routers import DefaultRouter
 import xadmin
 from apps.ApiManager import views as ApiManager_views
-from apps.users.views import RegisterView,LoginView
+from apps.users.views import RegisterView,LoginView,user_logout
+from apps.RobotManager import  views as RobotManager_Views
+
+router=DefaultRouter()
+
+#配置RobotManager的url
+# router.register(r'robot_project_list/',ProjectView.as_view(),base_name='robot_project_list')
+
+
+
 urlpatterns = [
     path('admin/', xadmin.site.urls),
     path('index/',ApiManager_views.index),
@@ -38,7 +49,16 @@ urlpatterns = [
     path('edit_module/<int:eid>/',ApiManager_views.add_module_page),
     path('edit_module/',ApiManager_views.edit_module),
     path('add_testcase/',ApiManager_views.add_testcase_page),
+
     path('register/',RegisterView.as_view(),name='register'),
-    path('login/',LoginView.as_view(),name='login')
+    path('',LoginView.as_view(),name='login'),
+    path('logout/',user_logout,name='logout'),
+#    robot项目路由
+    path('robot_project_list/',RobotManager_Views.ProjectView.as_view(),name='project_list'),
+    path('robot_project_detail/<int:id>/',RobotManager_Views.ProjectEditView.as_view(),name='project_detail'),
+    path('robot_project_add/',RobotManager_Views.ProjectAddView.as_view(),name='project_add'),
+    #Restframework设置
+    path('docs',include_docs_urls(title='REST文档')),
+    path('api_auth',include('rest_framework.urls')),
 
 ]

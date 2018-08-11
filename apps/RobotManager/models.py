@@ -12,7 +12,7 @@ class Project(models.Model):
         ('app','App自动化'),
         ('inface','接口自动化')
     )
-    name = models.CharField(max_length=18,verbose_name=u'项目名称')
+    name = models.CharField(max_length=18,verbose_name=u'项目名称',unique=True)
     type = models.CharField(max_length=20,choices=project_type,verbose_name=u'项目类型')
     creator = models.ForeignKey(UserProfile,verbose_name=u'创建人',on_delete=models.SET_NULL,null=True,blank=True)
     detail = models.CharField(max_length=50,verbose_name=u'项目描述')
@@ -101,7 +101,7 @@ class Cases(models.Model):
 
 
 class Library(models.Model):
-    name = models.CharField(max_length=50,verbose_name=u'Library名称')
+    name = models.CharField(max_length=50,verbose_name=u'Library名称',unique=True)
     doc = models.CharField(max_length=50,verbose_name=u'Library名描述')
     add_time = models.DateField(auto_now_add=True,verbose_name=u'创建时间')
     edit_time = models.DateField(auto_now=True,verbose_name=u'修改时间')

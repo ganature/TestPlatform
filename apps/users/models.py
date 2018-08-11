@@ -7,8 +7,8 @@ from django.contrib.auth.models import AbstractUser
 
 class UserProfile(AbstractUser):
     user_role = (
-        (1,u'测试人员'),
-        (2,u'开发人员')
+        ('1',u'测试人员'),
+        ('2',u'开发人员'),
     )
     nick_name=models.CharField(max_length=50,verbose_name=u'昵称')
     role=models.CharField(choices=user_role,max_length=20,verbose_name=u'角色')

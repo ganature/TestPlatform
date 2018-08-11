@@ -1,0 +1,299 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/static/css/bootstrap-select.min.css" rel="stylesheet">
+	<link href="/static/css/bootstrapValidator.min.css" rel="stylesheet" />
+	<!-- 可选的Bootstrap主题文件（一般不使用） -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></script>
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/static/js/bootstrap-select.min.js"></script>
+	<script src='/static/js/bootstrapValidator.min.js'></script>
+
+
+	<style>
+		.div-brand {
+			height: 30px;
+			background-color: white;
+		}
+	</style>
+</head>
+
+<body>
+	<nav class="nav navbar-inverse" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<p class="navbar-brand">测试管理平台</p>
+			</div>
+			<div>
+				<ul class="nav navbar-nav">
+					<li class="active">
+						<a href="#">项目</a>
+					</li>
+					<li>
+						<a href="#">测试库</a>
+					</li>
+					<li>
+						<a href="#">任务</a>
+					</li>
+					<li>
+						<a href="#">测试报告</a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							系统设置
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#">环境管理</a>
+							</li>
+							<li>
+								<a href="#">配置管理</a>
+							</li>
+							<li>
+								<a href="#">J接口管理</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="#"></a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="#">另一个分离的链接</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown-user">
+						<a href="#" class="dropdown-user" data-toggle="dropdown">
+							admin
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#">个人信息</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="#">退出登录</a>
+							</li>
+
+						</ul>
+					</li>
+
+				</ul>
+
+			</div>
+		</div>
+
+	</nav>
+	<div class="div-brand"></div>
+	<div class="container-fluid">
+
+		<div class="row ">
+			<div class="col-md-3">
+				<ul id="main-nav" class="nav nav-tabs nav-stacked" style="background-color:ghostwhite">
+					<li class="active">
+						<a href="#">
+							<i class="glyphicon glyphicon-th-large"></i>
+							导航
+						</a>
+					</li>
+					<li>
+						<a href="#projectManage" class="nav-header collapsed" data-toggle="collapse">
+							<i class="glyphicon glyphicon-cog"></i>
+							项目管理
+							<span class="pull-right glyphicon glyphicon-chevron-down"></span>
+						</a>
+						<ul id="projectManage" class="nav nav-list collapse  secondmenu" style="height: 0px;margin-left: 20px;">
+							<li>
+								<a href="project_list.html"> <i class="glyphicon glyphicon-user " style="background-color: #23C1CD;">
+									</i>项目管理</a>
+							</li>
+							<li>
+								<a href="module_list">
+									<i class="glyphicon glyphicon-th-list"></i>模块管理</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#caseManage" class="nav-header collapsed" data-toggle="collapse">
+							<i class="glyphicon glyphicon-cog"></i>
+							用例管理
+							<span class="pull-right glyphicon glyphicon-chevron-down"></span>
+						</a>
+						<ul id="caseManage" class="nav nav-list collapse secondmenu" style="height: 0px;margin-left: 20px;">
+							<li>
+								<a href="cases_list">
+									<i class="glyphicon glyphicon-asterisk"></i>用例库</a>
+							</li>
+							<li>
+								<a href="keywords_list">
+									<i class="glyphicon glyphicon-edit"></i>关键字管理</a>
+							</li>
+							<li>
+								<a href="steps_list">
+									<i class="glyphicon glyphicon-eye-open"></i>操作步骤</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="./grid.html">
+							<i class="glyphicon glyphicon-globe"></i>
+							分发配置
+							<span class="label label-warning pull-right">5</span>
+						</a>
+					</li>
+					<li>
+						<a href="./charts.html">
+							<i class="glyphicon glyphicon-calendar"></i>
+							图表统计
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="glyphicon glyphicon-fire"></i>
+							关于系统
+						</a>
+					</li>
+				</ul>
+				<script>
+					$(function () {
+						$('#caseManage').collapse({
+							toggle: false
+						})
+					});
+					$(function () {
+						$('#projectManage').collapse('show');
+
+					});
+					$(function () {
+						$('#projectManage').collapse('toggle')
+					});
+					$(function () {
+						$('#collapseOne').collapse('hide')
+					});
+				</script>
+			</div>
+
+		    <div class="col-md-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">编辑项目</h3>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal" action="" method="post">
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="project_name">项目名称</label>
+							<div class="col-md-4">
+								<input class="form-control" id='project_name' name='project_name' placeholder="请输入项目名称" value={{ project.name }}/>
+							</div>
+						</div>
+						<div class="form-group ">
+							<label class="col-md-2 control-label" for="project_detail">项目描述</label>
+							<div class="col-md-4 ">
+								<input class="form-control text-success" id='project_detail' name='project_detail' placeholder="请输入项目描述" value={{ project.detail }} />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">项目类型</label>
+							<div class="col-md-2">
+								<select class="selectpicker" id='project_select'>
+									<option value="">1</option>
+									<option value="">2</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label">创建人</label>
+							<div class="col-md-3">
+								<input class="form-control" readonly="readonly" value="{{ project.creator }}" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="project_remark">项目备注</label>
+							<div class="col-md-4">
+								<input class="form-control" id='project_remark' name='project_remark' placeholder="请输入项目备注" value="" />
+							</div>
+						</div>
+
+						<div class="form-group" style="float: right;padding-right: 60px;">
+							<button class="btn btn-primary" type="submit" name="submit">确认</button>
+							<button class="btn btn-primary" type="reset">重置</button>
+							<button class="btn btn-primary" onclick="javascript:location.href='project_list.html'" type="button">返回</button>
+						</div>
+						<script>
+							$(function () {
+								$('form').bootstrapValidator({
+
+									　　　　　　　　
+									message: 'This value is not valid',
+									　feedbackIcons: {　　　　　　　　
+										valid: 'glyphicon glyphicon-ok',
+										　　　　　　　　invalid: 'glyphicon glyphicon-remove',
+										　　　　　　　　validating: 'glyphicon glyphicon-refresh'　　　　　　　　
+									},
+									fields: {
+										project_name: {
+											message: '项目名称验证失败',
+											validators: {
+												notEmpty: {
+													message: '项目名称不能为空'
+												},
+												stringLength: {
+													min: 6,
+													max: 18,
+													message: '项目名称长度必须在6到18位之间'
+												},
+												regexp: {
+													regexp: /^[a-zA-Z0-9_]+$/,
+													message: '项目名称只能包含大写、小写、数字和下划线'
+												}
+											}
+										},
+										project_detail: {
+											validators: {
+												notEmpty: {
+													message: '项目详情不能为空'
+												}
+											}
+										},
+										project_remark: {
+											validators: {
+												stringLength: {
+													max: 100,
+													message: '备注长度不能超过100'
+												}
+											}
+										}
+									}
+								});
+							});
+						</script>
+					</form>
+				</div>
+
+			</div>
+
+		</div>
+		    <div class="col-md-3">
+
+		</div>
+	    </div>
+	</div>
+</body>
+
+</html>

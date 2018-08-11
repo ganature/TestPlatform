@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- 引入bootstrap-table的css文件-->
+	<link href="/static/css/bootstrap-table.css" rel="stylesheet" />
+	<!-- 引入bootstrap-select的css文件-->
+	<link href="/static/css/bootstrap-select.min.css" rel="stylesheet">
+	<!-- 引入bootstrapValidator的css文件-->
+	<link href="/static/css/bootstrapValidator.min.css" rel="stylesheet" />
+	<!-- 可选的Bootstrap主题文件（一般不使用） -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></script>
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/static/js/bootstrap-select.min.js"></script>
+	<script src='/static/js/bootstrapValidator.min.js'></script>
+
+	<!-- 引入bootstrap-table的js文件   https://www.cnblogs.com/landeanfen/p/4976838.html-->
+	<script src="/static/js/bootstrap-table.js"></script>
+	<script src="/static/js/bootstrap-table-zh-CN.js"></script>
+	<style>
+		.div-brand {
+			height: 30px;
+			background-color: white;
+		}
+	</style>
+</head>
+<body>
+
+{% block content %}
+    {% include 'robotTemplates/nav.html' %}
+    <div class="div-brand"></div>
+	<div class="container-fluid">
+		<div class="row ">
+    {% include 'robotTemplates/left_content.html' %}
+    {% block right_content %}
+        {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

@@ -44,19 +44,22 @@ INSTALLED_APPS = [
     'apps.ApiManager',
     'captcha',
     'apps.users',
-    'apps.RobotManager'
+    'apps.RobotManager',
+    'rest_framework',
+    'coreschema'
 ]
 
 MIDDLEWARE = [
+   # 'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-#      'django.middleware.csrf.CsrfViewMiddleware',
+#   'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'TestPlatform.urls'
 
 TEMPLATES = [
@@ -71,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
             ],
         },
     },
@@ -142,3 +146,16 @@ ADMIN_PASSWORD='admin123'
 
 #设定登录的路由
 LOGIN_URL='/login/'
+
+
+
+REST_FRAMEWORK = {
+    #分页
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    #每页显示的个数
+    'PAGE_SIZE': 10,
+'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.TokenAuthentication',)
+}
+
+MIDDLEWARE_CLASSES = ('app.tests.DisableCSRF',
+                      'pagination.middleware.PaginationMiddleware',)

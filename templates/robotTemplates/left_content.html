@@ -1,0 +1,84 @@
+<div class="col-md-3">
+				<ul id="main-nav" class="nav nav-tabs nav-stacked" style="background-color:ghostwhite">
+					<li class="active">
+						<a href="#">
+							<i class="glyphicon glyphicon-th-large"></i>
+							导航
+						</a>
+					</li>
+					<li>
+						<a href="#projectManage" class="nav-header collapsed" data-toggle="collapse">
+							<i class="glyphicon glyphicon-cog"></i>
+							项目管理
+							<span class="pull-right glyphicon glyphicon-chevron-down"></span>
+						</a>
+						<ul id="projectManage" class="nav nav-list collapse  secondmenu" style="height: 0px;margin-left: 20px;">
+							<li>
+								<a href="{% url 'project_list'%}" ><i class="glyphicon glyphicon-user " style="background-color: #23C1CD;">
+									</i>项目管理</a>
+							</li>
+							<li>
+								<a href="#">
+									<i class="glyphicon glyphicon-th-list"></i>模块管理</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#caseManage" class="nav-header collapsed" data-toggle="collapse">
+							<i class="glyphicon glyphicon-cog"></i>
+							用例管理
+							<span class="pull-right glyphicon glyphicon-chevron-down"></span>
+						</a>
+						<ul id="caseManage" class="nav nav-list collapse secondmenu" style="height: 0px;margin-left: 20px;">
+							<li>
+								<a href="cases_list">
+									<i class="glyphicon glyphicon-asterisk"></i>用例库</a>
+							</li>
+							<li>
+								<a href="keywords_list">
+									<i class="glyphicon glyphicon-edit"></i>关键字管理</a>
+							</li>
+							<li>
+								<a href="steps_list">
+									<i class="glyphicon glyphicon-eye-open"></i>操作步骤</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="./grid.html">
+							<i class="glyphicon glyphicon-globe"></i>
+							系统配置
+							<span class="label label-warning pull-right">5</span>
+						</a>
+					</li>
+					<li>
+						<a href="./charts.html">
+							<i class="glyphicon glyphicon-calendar"></i>
+							图表统计
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="glyphicon glyphicon-fire"></i>
+							关于系统
+						</a>
+					</li>
+				</ul>
+				<script>
+					$(function () {
+						$('#caseManage').collapse({
+							toggle: false
+						})
+					});
+					$(function () {
+						$('#projectManage').collapse('show');
+
+					});
+					$(function () {
+						$('#projectManage').collapse('toggle')
+					});
+					$(function () {
+						$('#collapseOne').collapse('hide')
+					});
+				</script>
+			</div>

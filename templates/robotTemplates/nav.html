@@ -1,0 +1,77 @@
+<nav class="nav navbar-inverse" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<p class="navbar-brand">测试管理平台</p>
+			</div>
+			<div>
+				<ul class="nav navbar-nav">
+					<li class="active">
+						<a href="#">项目</a>
+					</li>
+					<li>
+						<a href="#">测试库</a>
+					</li>
+					<li>
+						<a href="#">任务</a>
+					</li>
+					<li>
+						<a href="#">测试报告</a>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							系统设置
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#">环境管理</a>
+							</li>
+							<li>
+								<a href="#">配置管理</a>
+							</li>
+							<li>
+								<a href="#">J接口管理</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="#"></a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="#">另一个分离的链接</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div>
+                {% if request.user.is_authenticated %}
+				    <ul class="nav navbar-nav navbar-right">
+
+					<li class="dropdown-user">
+						<a href="#" class="dropdown-user" data-toggle="dropdown">
+							admin
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#">个人信息</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="{% url 'logout' %}">退出登录</a>
+							</li>
+
+						</ul>
+					</li>
+
+				</ul>
+                {% else %}
+                    <div class="na navbar-nav navbar-right">
+                        <a href="{% url 'login' %}">登录</a>
+                    </div>
+                {% endif %}
+			</div>
+		</div>
+
+	</nav>

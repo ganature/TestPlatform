@@ -1,0 +1,103 @@
+{% extends 'robotTemplates/base.html' %}
+
+{% block right_content %}
+<div class="col-md-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">新增项目</h3>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal" action=" " method="POST">
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="name">项目名称</label>
+							<div class="col-md-4">
+								<input class="form-control" id='name' name='name' placeholder="请输入项目名称" value=""/>
+							</div>
+						</div>
+						<div class="form-group ">
+							<label class="col-md-2 control-label" for="detail">项目描述</label>
+							<div class="col-md-4 ">
+								<input class="form-control text-success" id='detail' name='detail' placeholder="请输入项目描述" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="project_select">项目类型</label>
+							<div class="col-md-2">
+									<select class="selectpicker" id="project_select" name="type">
+                                        <option value="web">Web自动化</option>
+                                        <option value="app">APP自动化</option>
+                                        <option value="inface">接口自动化</option>
+
+                                    </select>
+							</div>
+						</div>
+						<div class="form-group">
+{#							<label class="col-md-2 control-label" for="creator">创建人</label>#}
+								<input class="form-control" id='creator' name="creator" style="display: none" readonly="readonly" value={{ request.user.id }} />
+						</div>
+						<div class="form-group">
+							<label class="col-md-2 control-label" for="remark">项目备注</label>
+							<div class="col-md-4">
+								<input class="form-control" id='remark' name='remark' placeholder="请输入项目备注" value="" />
+							</div>
+						</div>
+						<div class="form-group" style="float: right;padding-right: 60px;">
+							<input class="btn btn-primary" type="submit"  />
+							<button class="btn btn-primary" type="reset">重置</button>
+							<button class="btn btn-primary" onclick="javascript:history.back(-1);" type="button">返回</button>
+						</div>
+                        <div class="form-group errors">{{ error }}</div>
+						<script>
+							$(function () {
+								$('form').bootstrapValidator({
+                                    　　　　　　　　
+									message: 'This value is not valid',
+									　feedbackIcons: {　　　　　　　　
+										valid: 'glyphicon glyphicon-ok',
+										　　　　　　　　invalid: 'glyphicon glyphicon-remove',
+										　　　　　　　　validating: 'glyphicon glyphicon-refresh'　　　　　　　　
+									},
+									fields: {
+										project_name: {
+											message: '项目名称验证失败',
+											validators: {
+												notEmpty: {
+													message: '项目名称不能为空'
+												},
+												stringLength: {
+													min: 6,
+													max: 18,
+													message: '项目名称长度必须在6到18位之间'
+												},
+												regexp: {
+													regexp: /^[a-zA-Z0-9_]+$/,
+													message: '项目名称只能包含大写、小写、数字和下划线'
+												}
+											}
+										},
+										project_detail: {
+											validators: {
+												notEmpty: {
+													message: '项目详情不能为空'
+												}
+											}
+										},
+										project_remark: {
+											validators: {
+												stringLength: {
+													max: 100,
+													message: '备注长度不能超过100'
+												}
+											}
+										}
+									}
+								});
+							});
+						</script>
+					</form>
+				</div>
+
+			</div>
+
+		</div>
+{% endblock %}
