@@ -7,48 +7,65 @@
                 <h3 class="panel-title">新增项目</h3>
             </div>
             <div class="panel-body">
-                <form class="form-horizontal" action=" " method="POST">
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="name">项目名称</label>
-                        <div class="col-md-4">
-                            <input class="form-control" id='name' name='name' placeholder="请输入项目名称" value=""/>
-                        </div>
-                    </div>
+                <form id='suiteform' class="form-horizontal" action=" " method="POST">
+                    {{ suiteform }}
                     <div class="form-group ">
-                        <label class="col-md-2 control-label" for="detail">项目描述</label>
-                        <div class="col-md-4 ">
-                            <input class="form-control text-success" id='detail' name='detail' placeholder="请输入项目描述"
-                                   value=""/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="project_select">项目类型</label>
-                        <div class="col-md-2">
-                            <select class="selectpicker" id="project_select" name="type">
-                                <option value="web">Web自动化</option>
-                                <option value="app">APP自动化</option>
-                                <option value="inface">接口自动化</option>
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {#							<label class="col-md-2 control-label" for="creator">创建人</label>#}
-                        <input class="form-control" id='creator' name="creator" style="display: none"
-                               readonly="readonly" value={{ request.user.id }}/>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="remark">项目备注</label>
+                        <label class="col-md-2 control-label" for="suite_num">{{ suiteform.suite_num.label }}</label>
                         <div class="col-md-4">
-                            <input class="form-control" id='remark' name='remark' placeholder="请输入项目备注" value=""/>
+                            {{ suiteform.suite_num }}
+                        </div>
+
+                        {% if suiteform.suite_num.error_messages %}
+                            <span class="errors" style="color: red">{{ suiteform.suite_num.errors }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="name">{{ suiteform.name.label }}</label>
+                        <div class="col-md-6">
+                            {{ suiteform.name }}
+                        </div>
+                        {% if suiteform.name.errors %}
+                            <span class="errors" style="color: red">{{ suiteform.name.error_messages }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="name">{{ suiteform.belong_module.label }}</label>
+                        <div class="col-md-6">
+                            {{ suiteform.belong_module }}
+                        </div>
+                        {% if suiteform.name.errors %}
+                            <span class="errors " style="color: red">{{ suiteform.name.error_messages }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group " style="display: none">
+                        <label class="col-md-2 control-label" for="name">{{ suiteform.creator.label }}</label>
+                        <div class="col-md-6">
+                            {{ suiteform.creator }}
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="name">{{ suiteform.detail.label }}</label>
+                        <div class="col-md-6">
+                            {{ suiteform.detail }}
+                        </div>
+                    </div>
+                    {% if errors %}
+                        <span class="errors " style="color: red">{{ error }}</span>
+                    {% endif %}
+                    {% if msg %}
+                        <script>
+                            alert(msg);
+                        </script>
+                    {% endif %}
+
+
+
                     <div class="form-group" style="float: right;padding-right: 60px;">
                         <input class="btn btn-primary" type="submit"/>
                         <button class="btn btn-primary" type="reset">重置</button>
-                        <button class="btn btn-primary" onclick="javascript:history.back(-1);" type="button">返回</button>
+                        <button class="btn btn-primary" onclick="history.back(-1);" type="button">返回</button>
                     </div>
-                    <div class="form-group errors">{{ error }}</div>
+                    <div class="form-group errors">{{ error }} </div>
                     <script>
                         $(function () {
                             $('form').bootstrapValidator({
@@ -95,6 +112,25 @@
                             });
                         });
                     </script>
+{#                    <script>#}
+{#                        $(document).ready(function () {#}
+{#                            $('#suiteform').submit(function () {	//这次我们这么绑定#}
+{#                                var contact = $("input[name='contact']").val();#}
+{#                                var title = $("input[name='title']").val();#}
+{#                                var errmessage = $("textarea[name='errmessage']").val();#}
+{#                                var err_data = {#}
+{#                                    contact: contact,#}
+{#                                    title: title,#}
+{#                                    errmessage: errmessage#}
+{#                                }#}
+{#                                $.ajax({#}
+{#                                    // ajax提交代码....#}
+{#                                });#}
+{#                                return false;	//还是要return false, 跟上面一样的道理#}
+{#                            });#}
+{#                        });#}
+{##}
+{#                    </script>#}
                 </form>
             </div>
 

@@ -1,206 +1,102 @@
 {% extends 'robotTemplates/robot_project_list.html' %}
-{% block content %}
-<div class="container-fluid">
-		<div class="row ">
-            {% block left_content %}
-                {% endblock %}
+{% block right_content %}
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">新增模块</h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" action=" " method="POST">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="name">模块名称</label>
+                        <div class="col-md-4">
+                            <input class="form-control" id='name' name='name' placeholder="请输入模块名称" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-md-2 control-label" for="detail">模块描述</label>
+                        <div class="col-md-4 ">
+                            <input class="form-control text-success" id='detail' name='detail' placeholder="请输入模块描述"
+                                   value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="project_select">所属项目</label>
+                        <div class="col-md-4">
+                            <select class="selectpicker" id="project_select" name="type">
+                                <option value="web">Web自动化</option>
+                                <option value="app">APP自动化</option>
+                                <option value="inface">接口自动化</option>
 
-			<div class="col-md-8">
-				<div class="panel-body" style="padding-bottom:0px;">
-					<div class="panel panel-default">
-						<div class="panel-heading">查询条件</div>
-						<div class="panel-body">
-							<form id="formSearch" class="form-horizontal">
-								<div class="form-group" style="margin-top:15px">
-									<label class="control-label col-sm-1" for="txt_search_departmentname">项目名称</label>
-									<div class="col-sm-3">
-										<input type="text" class="form-control" id="txt_search_departmentname">
-									</div>
-									<label class="control-label col-sm-1" for="txt_search_statu">状态</label>
-									<div class="col-sm-3">
-										<input type="text" class="form-control" id="txt_search_statu">
-									</div>
-									<div class="col-sm-4" style="text-align:left;">
-										<button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {#							<label class="col-md-2 control-label" for="creator">创建人</label>#}
+                        <input class="form-control" id='creator' name="creator" style="display: none"
+                               readonly="readonly" value={{ request.user.id }}/>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="remark">模块备注</label>
+                        <div class="col-md-4">
+                            <input class="form-control" id='remark' name='remark' placeholder="请输入模块备注" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group" style="float: right;padding-right: 60px;">
+                        <input class="btn btn-primary" type="submit"/>
+                        <button class="btn btn-primary" type="reset">重置</button>
+                        <button class="btn btn-primary" onclick="javascript:history.back(-1);" type="button">返回</button>
+                    </div>
+                    <div class="form-group errors">{{ error }}</div>
+                    <script>
+                        $(function () {
+                            $('form').bootstrapValidator({
+                                message: 'This value is not valid',
+                                feedbackIcons: {
+                                    valid: 'glyphicon glyphicon-ok',
+                                    invalid: 'glyphicon glyphicon-remove',
+                                    validating: 'glyphicon glyphicon-refresh'
+                                },
+                                fields: {
+                                    project_name: {
+                                        message: '模块名称验证失败',
+                                        validators: {
+                                            notEmpty: {
+                                                message: '模块名称不能为空'
+                                            },
+                                            stringLength: {
+                                                min: 6,
+                                                max: 18,
+                                                message: '模块名称长度必须在6到18位之间'
+                                            },
+                                            regexp: {
+                                                regexp: /^[a-zA-Z0-9_]+$/,
+                                                message: '模块名称只能包含大写、小写、数字和下划线'
+                                            }
+                                        }
+                                    },
+                                    project_detail: {
+                                        validators: {
+                                            notEmpty: {
+                                                message: '模块详情不能为空'
+                                            }
+                                        }
+                                    },
+                                    project_remark: {
+                                        validators: {
+                                            stringLength: {
+                                                max: 100,
+                                                message: '备注长度不能超过100'
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+                </form>
+            </div>
 
-					<div id="toolbar" class="btn-group">
-						<button id="btn_add" type="button" class="btn btn-default">
-							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-						</button>
-						<button id="btn_edit" type="button" class="btn btn-default">
-							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-						</button>
-						<button id="btn_delete" type="button" class="btn btn-default">
-							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-						</button>
-					</div>
-					<table id="tb_departments"></table>
-				</div>
-				<script>
-					$(function () {
-
-						//1.初始化Table
-						var oTable = new TableInit();
-						oTable.Init();
-
-						//2.初始化Button的点击事件
-						var oButtonInit = new ButtonInit();
-						oButtonInit.Init();
-
-					});
-					var TableInit = function () {
-					var oTableInit = new Object();
-					//初始化Table
-					oTableInit.Init = function () {
-						$('#tb_departments').bootstrapTable({
-							url: '/Home/GetDepartment', //请求后台的URL（*）
-							method: 'get', //请求方式（*）
-							toolbar: '#toolbar', //工具按钮用哪个容器
-							striped: true, //是否显示行间隔色
-							cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-							pagination: true, //是否显示分页（*）
-							sortable: false, //是否启用排序
-							sortOrder: "asc", //排序方式
-							queryParams: oTableInit.queryParams, //传递参数（*）
-							sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
-							pageNumber: 1, //初始化加载第一页，默认第一页
-							pageSize: 10, //每页的记录行数（*）
-							pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
-							search: true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-							strictSearch: true,
-							showColumns: true, //是否显示所有的列
-							showRefresh: true, //是否显示刷新按钮
-							minimumCountColumns: 2, //最少允许的列数
-							clickToSelect: true, //是否启用点击选中行
-							height: 500, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-							uniqueId: "ID", //每一行的唯一标识，一般为主键列
-							showToggle: true, //是否显示详细视图和列表视图的切换按钮
-							cardView: false, //是否显示详细视图
-							detailView: false, //是否显示父子表
-							columns: [{
-								checkbox: true
-							}, {
-								field: 'Name',
-								title: '部门名称'
-							}, {
-								field: 'ParentName',
-								title: '上级部门'
-							}, {
-								field: 'Level',
-								title: '部门级别'
-							}, {
-								field: 'Desc',
-								title: '描述'
-							}, ]
-						});
-					};
-
-					onEditableSave: function (field, row, oldValue, $el) {
-						//可进行异步操作
-
-						$.ajax({
-							type: "post",
-							url: "/index/Edit",
-							data: row,
-							dataType: 'JSON',
-							success: function (data, status) {
-								if (status == "success") {
-									alert('提交数据成功');
-								}
-							},
-							error: function () {
-								alert('编辑失败');
-							},
-							complete: function () {
-
-							}
-						});
-					}
-
-					});
-					};
-					//得到查询的参数
-					oTableInit.queryParams = function (params) {
-						var temp = { //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-							limit: params.limit, //页面大小
-							offset: params.offset, //页码
-							departmentname: $("#txt_search_departmentname").val(),
-							statu: $("#txt_search_statu").val()
-						};
-						return temp;
-					};
-					return oTableInit;
-					};
-
-					//(2)关键字检索
-					$("#btn_query").click(function () {
-						//点击查询是 使用刷新 处理刷新参数
-						var opt = {
-							url: "/index/GetDepartment",
-							silent: true,
-							query: {
-								text1: $("#txt_search_departmentname").val(), //条件1
-								text2: $("#txt_search_statu").val() //条件2 ....
-							}
-						};
-						$('#tb_departments').bootstrapTable('refresh', opt);
-
-					});
-
-					//(3)修改一、获取编号进入下一页
-					$("#btn_edit").click(function () {
-						var i = 0;
-						var id;
-						$("input[name='btSelectItem']:checked").each(function () {
-							i++;
-							id = $(this).parents("tr").attr("data-uniqueid");
-						})
-						if (i > 1) {
-							alert("编辑只支持单一操作")
-						} else {
-							if (i != 0) {
-								alert("获取选中的id为" + id);
-								window.location.href = "/index/index";
-							} else {
-								alert("请选中要编辑的数据");
-							}
-
-						}
-
-					})
-					//(4)删除及批量删除
-
-					$("#btn_delete").click(function () {
-								if (confirm("确认要删除吗？")) {
-									var idlist = "";
-									$("input[name='btSelectItem']:checked").each(function () {
-										idlist += $(this).parents("tr").attr("data-uniqueid") + ",";
-									})
-									alert("删除的列表为" + idlist);
-
-								};
-
-
-								var ButtonInit = function () {
-									var oInit = new Object();
-									var postdata = {};
-
-									oInit.Init = function () {
-										//初始化页面上面的按钮事件
-									};
-
-									return oInit;
-								};
-				</script>
-			</div>
-			<div class="col-md-3">
-
-			</div>
-		</div>
-	</div>
+        </div>
+    </div>
 {% endblock %}

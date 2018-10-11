@@ -46,22 +46,29 @@
                     删除
                 </button>
             </div>
+            <div>
+                {% for f in obj_form. %}
+
+                    <p>{{ f }}</p>
+                {% endfor %}
+            </div>
             <table id="tb" class="table table-bordered">
                 <thead>
                 <tr>
                     <th><input class="checkbox-row" type="checkbox"></th>
-                    <th>项目名称</th>
-                    <th>项目类型</th>
-                    <th>项目创建人</th>
-                    <th>项目描述</th>
-                    <th>创建时间</th>
-                    <th>修改时间</th>
+                    <th>{{ obj_form.name.label }} </th>
+                    <th>{{ obj_form.type.label }}</th>
+                    <th>{{ obj_form.creator.label }}</th>
+                    <th>{{ obj_form.detail.label }}</th>
+                    <th>{{ obj_form.addtime.label }}</th>
+                    <th>{{ obj_form.edittime.label }} </th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for p in project %}
+                {% for p in obj %}
                     <tr>
                         <td><input class="checkbox-row" type="checkbox"></td>
+
                         <td><a href="{% url 'project_detail' p.id %} ">{{ p.name }}</a></td>
                         <td>{{ p.type }}</td>
                         <td>{{ p.creator }}</td>
@@ -75,25 +82,25 @@
             </table>
             <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    {% if  project.previous_page_number > 0 %}
+                    {% if  obj.previous_page_number > 0 %}
                         <li>
-                            <a href="?page={{ project.previous_page_number }}" aria-label="Previous">
+                            <a href="?page={{ obj.previous_page_number }}" aria-label="Previous">
                                 <span aria-hidden="true">«</span>
                             </a>
                         </li>
                     {% endif %}
 
-                    {% for page_num in project_list %}
-                        {% if page_num == project.number %}
+                    {% for page_num in obj_list %}
+                        {% if page_num == obj.number %}
                             <li class="active"><a href="?page={{ page_num }}">{{ page_num }}</a></li>
                         {% else %}
                             <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
                         {% endif %}
                     {% endfor %}
 
-                    {% if project.has_next %}
+                    {% if obj.has_next %}
                         <li>
-                            <a href="?page={{ project.next_page_number }}" aria-label="Next">
+                            <a href="?page={{ obj.next_page_number }}" aria-label="Next">
                                 <span aria-hidden="true">»</span>
                             </a>
                         </li>

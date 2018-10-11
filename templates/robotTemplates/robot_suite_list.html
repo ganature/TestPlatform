@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block right_content %}
+
+    <div class="col-md-8" >
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <table id="tb" class="table table-bordered">
+                <thead>
+                <tr>
+                    <th><input class="checkbox-row" type="checkbox"></th>
+                    <th>测试集名称</th>
+                    <th>测试集类型</th>
+                    <th>测试集创建人</th>
+                    <th>测试集描述</th>
+                    <th>创建时间</th>
+                    <th>修改时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for p in suite %}
+                    <tr>
+                        <td><input class="checkbox-row" type="checkbox"></td>
+                        <td><a href="{% url 'suite_detail' p.id %} ">{{ p.name }}</a></td>
+                        <td>{{ p.type }}</td>
+                        <td>{{ p.creator }}</td>
+                        <td>{{ p.detail }}</td>
+                        <td>{{ p.addtime }}</td>
+                        <td>{{ p.edittime }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% if  suite.previous_page_number > 0 %}
+                        <li>
+                            <a href="?page={{ suite.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">«</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% for page_num in suite_list %}
+                        {% if page_num == suite.number %}
+                            <li class="active"><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                        {% else %}
+                            <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if suite.has_next %}
+                        <li>
+                            <a href="?page={{ suite.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">»</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}

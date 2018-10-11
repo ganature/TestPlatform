@@ -57,6 +57,7 @@ urlpatterns = [
     path('robot_project_list/',RobotManager_Views.ProjectView.as_view(),name='project_list'),
     path('robot_project_detail/<int:id>/',RobotManager_Views.ProjectEditView.as_view(),name='project_detail'),
     path('robot_project_add/',RobotManager_Views.ProjectAddView.as_view(),name='project_add'),
+    path('robot_suite_add/',RobotManager_Views.SuiteAddView.as_view(),name='suite_add'),
     #Restframework设置
     path('docs',include_docs_urls(title='REST文档')),
     path('api_auth',include('rest_framework.urls')),
