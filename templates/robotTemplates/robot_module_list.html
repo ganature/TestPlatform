@@ -8,13 +8,13 @@
                 <div class="panel-body">
                     <form id="formSearch" class="form-horizontal">
                         <div class="form-group" style="margin-top:15px">
-                            <label class="control-label col-sm-1" for="txt_search_departmentname">项目名称</label>
+                            <label class="control-label col-sm-1" for="txt_search_departmentname">模块名称</label>
                             <div class="col-sm-3">
                                 <input type="text" class="form-control" id="txt_search_departmentname">
                             </div>
-                            <label class="control-label col-sm-1" for="txt_search_type">项目类型</label>
+                            <label class="control-label col-sm-1" for="txt_search_type">所属项目</label>
                             <div class="col-sm-3">
-                                <select class="selectpicker" id="txt_search_type">
+                                <select class="selectpicker" id="module_search_type">
                                     <option value="web">Web自动化</option>
                                     <option value="app">App自动化</option>
                                     <option value="inface">接口自动化</option>
@@ -46,18 +46,13 @@
                     删除
                 </button>
             </div>
-            <div>
-                {% for f in obj_form %}
 
-                    <p>{{ f }}</p>
-                {% endfor %}
-            </div>
             <table id="tb" class="table table-bordered">
                 <thead>
                 <tr>
                     <th><input class="checkbox-row" type="checkbox"></th>
                     <th>{{ obj_form.name.label }} </th>
-                    <th>{{ obj_form.type.label }}</th>
+                    <th>{{ obj_form.belong_project.label }}</th>
                     <th>{{ obj_form.creator.label }}</th>
                     <th>{{ obj_form.detail.label }}</th>
                     <th>{{ obj_form.addtime.label }}</th>

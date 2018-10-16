@@ -7,6 +7,9 @@ from apps.users.models import UserProfile
 # Create your models here.
 
 class Project(models.Model):
+    """
+    项目模型
+    """
     project_type = (
         ('web','Web自动化'),
         ('app','App自动化'),
@@ -29,6 +32,9 @@ class Project(models.Model):
 
 
 class Module(models.Model):
+    """
+    模块/包模型
+    """
     name = models.CharField(max_length=18,verbose_name=u'模块名称')
     belong_project = models.ForeignKey(Project,verbose_name=u'所属项目',on_delete=models.SET_NULL,null=True,blank=True)
     creator = models.ForeignKey(UserProfile,verbose_name=u'创建人',on_delete=models.SET_NULL,null=True,blank=True)
@@ -46,6 +52,9 @@ class Module(models.Model):
 
 
 class Suites(models.Model):
+    """
+    测试集模型
+    """
     suite_num = models.CharField(max_length=20,verbose_name=u'测试集编号')
     name = models.CharField(max_length=18,verbose_name=u'测试集名称')
     belong_module = models.ForeignKey(Module,verbose_name=u'所属模块',on_delete=models.SET_NULL,null=True,blank=True)
@@ -64,6 +73,9 @@ class Suites(models.Model):
 
 
 class Cases(models.Model):
+    """
+    测试用例模型
+    """
     case_type = (
         ('web','Web自动化'),
         ('app','App自动化'),
@@ -115,6 +127,9 @@ class Library(models.Model):
 
 
 class Keyword(models.Model):
+    """
+    关键字模型
+    """
     name = models.CharField(max_length=50,verbose_name=u'关键字名称')
     doc = models.CharField(max_length=50,verbose_name=u'关键字描述')
     library = models.ForeignKey(Library,verbose_name=u'所属Library',on_delete=models.SET_NULL,null=True,blank=True)
@@ -130,6 +145,9 @@ class Keyword(models.Model):
 
 
 class Resource(models.Model):
+    """
+    关键字资源
+    """
     name = models.CharField(max_length=50,verbose_name=u'Resource名称')
     doc = models.CharField(max_length=100,verbose_name=u'Resource描述')
     module = models.ForeignKey(Module,verbose_name=u'所属模块',on_delete=models.SET_NULL,null=True,blank=True)
@@ -163,6 +181,9 @@ class UserKeywords(models.Model):
 
 
 class Steps(models.Model):
+    """
+    测试步骤模型
+    """
     step_num = models.IntegerField(verbose_name=u'步骤顺序号')
     name = models.CharField(max_length=18,verbose_name=u'操作步骤名称')
     keyword = models.ForeignKey(UserKeywords,on_delete=models.SET_NULL,null=True,blank=True)
@@ -181,6 +202,9 @@ class Steps(models.Model):
 
 
 class CasesStep(models.Model):
+    """
+    用例和步骤的关系
+    """
     case_id = models.ForeignKey(Cases,verbose_name=u'测试用例',on_delete=models.SET_NULL,null=True,blank=True)
     step_seqnum = models.IntegerField(default=1,verbose_name=u'操作步骤顺序号')
     step_id = models.ForeignKey(Steps,verbose_name=u'操作步骤',on_delete=models.SET_NULL,null=True,blank=True)

@@ -17,7 +17,7 @@ import json
 from apps.users.models import UserProfile
 from apps.RobotManager.models import Project, Module, Cases, \
     Suites, Keyword, UserKeywords, Steps, Resource, CasesStep
-from apps.RobotManager.forms import ProjectForm, SuiteForm
+from apps.RobotManager.forms import ProjectForm, SuiteForm, ModuleForm
 from django.core.paginator import Paginator
 
 
@@ -100,6 +100,43 @@ class ProjectAddView(View):
             return render(request, 'robotTemplates/robot_project_add.html', {'error': project_form.errors})
         return HttpResponseRedirect(reverse('project_list'))
 
+
+class ModuleView(View):
+    """
+    模块列表页面
+    """
+
+    def get(self, request):
+        module_form = ModuleForm()
+        module = Module.objects.all()
+        paginator_obj = Paginator(module, 10)  # 每页10条
+        request_page_num = request.GET.get('page', 1)
+        module_obj = paginator_obj.page(request_page_num)
+
+        total_page_number = paginator_obj.num_pages
+
+        module_list = get_pages(int(total_page_number), int(request_page_num))
+
+        return render(request, 'robotTemplates/robot_module_list.html',
+                      {'obj': module_obj, 'obj_list': module_list, 'obj_form': module_form})
+
+
+class ModuleAddView(View):
+    """
+    模块/包新增页面
+    """
+
+    @staticmethod
+    def get(request):
+        return render(request, 'robotTemplates/robot_module_add.html')
+
+    def post(self, request):
+        module_form = ModuleForm(request.POST)
+        if module_form.is_valid():
+            module_form.save()
+        else:
+            return render(request, 'robotTemplates/robot_module_add.html', {'error': module_form.errors})
+        return HttpResponseRedirect(reverse('module_list'))
 
 
 class SuiteAddView(View):
