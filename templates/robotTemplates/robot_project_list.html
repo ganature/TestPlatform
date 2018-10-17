@@ -60,8 +60,9 @@
                     <th>{{ obj_form.type.label }}</th>
                     <th>{{ obj_form.creator.label }}</th>
                     <th>{{ obj_form.detail.label }}</th>
-                    <th>{{ obj_form.addtime.label }}</th>
-                    <th>{{ obj_form.edittime.label }} </th>
+                    <th>创建时间</th>
+                    <th>{{ obj_form.edit_time.label }} </th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -73,8 +74,8 @@
                         <td>{{ p.type }}</td>
                         <td>{{ p.creator }}</td>
                         <td>{{ p.detail }}</td>
-                        <td>{{ p.addtime }}</td>
-                        <td>{{ p.edittime }}</td>
+                        <td>{{ p.add_time }}</td>
+                        <td>{{ p.edit_time }}</td>
                     </tr>
                 {% endfor %}
 

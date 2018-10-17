@@ -56,6 +56,8 @@ class ProjectView(View):
     def get(self, request):
         project_form = ProjectForm()
         project = Project.objects.all()
+        for p in project:
+            print(p.add_time)
         paginator_obj = Paginator(project, 10)  # 每页10条
         request_page_num = request.GET.get('page', 1)
         project_obj = paginator_obj.page(request_page_num)
@@ -94,6 +96,8 @@ class ProjectAddView(View):
 
     def post(self, request):
         project_form = ProjectForm(request.POST)
+        print(request.POST)
+        # project_form.creator=request.POST['creator']
         if project_form.is_valid():
             project_form.save()
         else:
@@ -130,7 +134,8 @@ class ModuleAddView(View):
     def get(request):
         return render(request, 'robotTemplates/robot_module_add.html')
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         module_form = ModuleForm(request.POST)
         if module_form.is_valid():
             module_form.save()

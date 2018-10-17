@@ -13,8 +13,8 @@ class ProjectForm(forms.ModelForm):
             'type':'项目类型',
             'creator':'创建人',
             'detail':'项目描述',
-            'addtime':'创建时间',
-            'edittime':'修改时间',
+            'add_time':'创建时间',
+            'edit_time':'修改时间',
         }
 
 

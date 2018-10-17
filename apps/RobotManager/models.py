@@ -20,8 +20,8 @@ class Project(models.Model):
     creator = models.ForeignKey(UserProfile,verbose_name=u'创建人',on_delete=models.SET_NULL,null=True,blank=True)
     detail = models.CharField(max_length=50,verbose_name=u'项目描述')
     remark = models.TextField(max_length=200,verbose_name=u'备注')
-    addtime = models.DateField(auto_now_add=True,verbose_name=u'创建时间')
-    edittime = models.DateField(auto_now=True,verbose_name=u'修改时间')
+    add_time = models.DateField(auto_now_add=True,verbose_name=u'创建时间')
+    edit_time = models.DateField(auto_now=True,verbose_name=u'修改时间')
 
     class Meta:
         verbose_name = u'测试项目'
