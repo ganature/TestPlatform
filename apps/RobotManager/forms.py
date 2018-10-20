@@ -23,18 +23,14 @@ class ModuleForm(forms.ModelForm):
         model=Module
         fields='__all__'
 
-class SuiteForm(forms.ModelForm):
-    # suite_num=forms.CharField(min_length=4,max_length=20,required=True,empty_value=u'请输入4-20测试集编号',error_messages={
-    #     'required':'测试集编号不能为空',
-    #     'invalid':'请输入4-20测试集编号',
-    # },widget=forms.TextInput(attrs={'class':'form-contrl'}),label='编号')
-    # name=forms.CharField(min_length=4,max_length=18,required=True,empty_value='请输入4-20测试集编号',error_messages={
-    #     'required':'名称不能为空'
-    # },widget=forms.TextInput(attrs={'class':'form-contrl'}),label='测试集名称')
-    class Meta:
-        model=Suites
-        fields='__all__'
-        widgets={
-            'belong_module':forms.Select(attrs={'class':'selectpicker'}),
 
-        }
+class SuiteForm(forms.Form):
+    suite_num = forms.CharField(min_length=4, max_length=20, required=True, empty_value=u'请输入4-20测试集编号',
+                                error_messages={
+                                    'required': '测试集编号不能为空',
+                                    'invalid': '请输入4-20测试集编号',
+                                }, widget=forms.TextInput(attrs={'class': 'form-contrl'}), label='测试集编号')
+    name = forms.CharField(min_length=4, max_length=18, required=True, empty_value='请输入4-20测试集编号', error_messages={
+        'required': '名称不能为空'
+    }, widget=forms.TextInput(attrs={'class': 'form-contrl'}), label='测试集名称')
+
