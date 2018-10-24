@@ -7,3 +7,4 @@ mytest*.py
 .idea/workspace.xml
 requirement-new.txt
 /migrations
+.vscode

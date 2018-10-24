@@ -14,55 +14,56 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include,re_path
+from django.urls import path, include, re_path
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 import xadmin
 from apps.ApiManager import views as ApiManager_views
-from apps.users.views import RegisterView,LoginView,user_logout
-from apps.RobotManager import  views as RobotManager_Views
+from apps.users.views import RegisterView, LoginView, user_logout
+from apps.RobotManager import views as RobotManager_Views
 
-router=DefaultRouter()
+router = DefaultRouter()
 
-#配置RobotManager的url
+# 配置RobotManager的url
 # router.register(r'robot_project_list/',ProjectView.as_view(),base_name='robot_project_list')
-
 
 
 urlpatterns = [
     path('admin/', xadmin.site.urls),
-    path('index/',ApiManager_views.index),
-    path('api_get/',ApiManager_views.api_get),
-    path(r'api/',include('apps.ApiManager.urls')),
-#     项目管理路由
-    path('project_list/',ApiManager_views.project_list),
-    path('add_project/',ApiManager_views.add_project_page),
-    path('add_project_action/',ApiManager_views.add_project),
-    path('del_project/',ApiManager_views.del_project),
-    path('edit_project/<int:eid>/',ApiManager_views.add_project_page),
-    path('edit_project/',ApiManager_views.edit_project),
-#     模块管理路由
-    path('module_list/',ApiManager_views.module_list),
-    path('add_module/',ApiManager_views.add_module_page),
-    path('add_module_action/',ApiManager_views.add_module),
-    path('del_module/',ApiManager_views.del_module),
-    path('edit_module/<int:eid>/',ApiManager_views.add_module_page),
-    path('edit_module/',ApiManager_views.edit_module),
-    path('add_testcase/',ApiManager_views.add_testcase_page),
+    path('index/', ApiManager_views.index),
+    path('api_get/', ApiManager_views.api_get),
+    path(r'api/', include('apps.ApiManager.urls')),
+    #     项目管理路由
+    path('project_list/', ApiManager_views.project_list),
+    path('add_project/', ApiManager_views.add_project_page),
+    path('add_project_action/', ApiManager_views.add_project),
+    path('del_project/', ApiManager_views.del_project),
+    path('edit_project/<int:eid>/', ApiManager_views.add_project_page),
+    path('edit_project/', ApiManager_views.edit_project),
+    #     模块管理路由
+    path('module_list/', ApiManager_views.module_list),
+    path('add_module/', ApiManager_views.add_module_page),
+    path('add_module_action/', ApiManager_views.add_module),
+    path('del_module/', ApiManager_views.del_module),
+    path('edit_module/<int:eid>/', ApiManager_views.add_module_page),
+    path('edit_module/', ApiManager_views.edit_module),
+    path('add_testcase/', ApiManager_views.add_testcase_page),
 
-    path('register/',RegisterView.as_view(),name='register'),
-    path('',LoginView.as_view(),name='login'),
-    path('logout/',user_logout,name='logout'),
-#    robot项目路由
-    path('robot_project_list/',RobotManager_Views.ProjectView.as_view(),name='project_list'),
-    path('robot_project_detail/<int:id>/',RobotManager_Views.ProjectEditView.as_view(),name='project_detail'),
-    path('robot_project_add/',RobotManager_Views.ProjectAddView.as_view(),name='project_add'),
-#   robot模块路由
-    path('robot_module_list/',RobotManager_Views.ModuleView.as_view(),name='module_list'),
-    path('robot_module_add/',RobotManager_Views.ModuleAddView.as_view(),name='module_add'),
-    path('robot_suite_add/',RobotManager_Views.SuiteAddView.as_view(),name='suite_add'),
-    #Restframework设置
-    path('docs',include_docs_urls(title='REST文档')),
-    path('api_auth',include('rest_framework.urls')),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('', LoginView.as_view(), name='login'),
+    path('logout/', user_logout, name='logout'),
+    #    robot项目路由
+
+    path('robot_project_list/', RobotManager_Views.ProjectView.as_view(), name='project_list'),
+    path('robot_project_detail/<int:id>/', RobotManager_Views.ProjectEditView.as_view(), name='project_detail'),
+    path('robot_project_add/', RobotManager_Views.ProjectAddView.as_view(), name='project_add'),
+    #   robot模块路由
+    path('robot_module_list/', RobotManager_Views.ModuleView.as_view(), name='module_list'),
+    path('robot_module_add/', RobotManager_Views.ModuleAddView.as_view(), name='module_add'),
+    path('robot_module_edit/<int:id>/',RobotManager_Views.ModuleAddView.as_view(),name='module_detail'),
+    path('robot_suite_add/', RobotManager_Views.SuiteAddView.as_view(), name='suite_add'),
+    # Restframework设置
+    path('docs', include_docs_urls(title='REST文档')),
+    path('api_auth', include('rest_framework.urls')),
 
 ]
