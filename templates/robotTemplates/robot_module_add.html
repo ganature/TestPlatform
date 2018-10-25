@@ -6,87 +6,54 @@
                 <h3 class="panel-title">新增模块</h3>
             </div>
             <div class="panel-body">
-                <form class="form-horizontal" action=" " method="POST">
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="name">{{ obj_form.name.label }}</label>
-                        <div class="col-md-4">
+                {% include 'robotTemplates/form.html' %}
+{#                    <script>#}
+{#                        $(function () {#}
+{#                            $('form').bootstrapValidator({#}
+{#                                message: 'This value is not valid',#}
+{#                                feedbackIcons: {#}
+{#                                    valid: 'glyphicon glyphicon-ok',#}
+{#                                    invalid: 'glyphicon glyphicon-remove',#}
+{#                                    validating: 'glyphicon glyphicon-refresh'#}
+{#                                },#}
+{#                                fields: {#}
+{#                                    name: {#}
+{#                                        message: '模块名称验证失败',#}
+{#                                        validators: {#}
+{#                                            notEmpty: {#}
+{#                                                message: '模块名称不能为空'#}
+{#                                            },#}
+{#                                            stringLength: {#}
+{#                                                min: 6,#}
+{#                                                max: 18,#}
+{#                                                message: '模块名称长度必须在6到18位之间'#}
+{#                                            },#}
+{#                                            regexp: {#}
+{#                                                regexp: /^[a-zA-Z0-9_]+$/,#}
+{#                                                message: '模块名称只能包含大写、小写、数字和下划线'#}
+{#                                            }#}
+{#                                        }#}
+{#                                    },#}
+{#                                    detail: {#}
+{#                                        validators: {#}
+{#                                            notEmpty: {#}
+{#                                                message: '模块详情不能为空'#}
+{#                                            }#}
+{#                                        }#}
+{#                                    },#}
+{#                                    remark: {#}
+{#                                        validators: {#}
+{#                                            stringLength: {#}
+{#                                                max: 100,#}
+{#                                                message: '备注长度不能超过100'#}
+{#                                            }#}
+{#                                        }#}
+{#                                    }#}
+{#                                }#}
+{#                            });#}
+{#                        });#}
+{#                    </script>#}
 
-                                {{ obj_form.name}}
-
-
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="project_select">{{ obj_form.belong_project.label }}</label>
-                        <div class="col-md-4">
-                            {{ obj_form.belong_project }}
-                        </div>
-                    </div>
-                    <div class="form-group ">
-                        <label class="col-md-2 control-label" for="detail">{{ obj_form.detail.label }}</label>
-                        <div class="col-md-4 ">
-                            {{ obj_form.detail }}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {#							<label class="col-md-2 control-label" for="creator">创建人</label>#}
-                        <input class="form-control" id='creator' name="creator" style="display: none"
-                               readonly="readonly" value={{ request.user.id }}/>
-                    </div>
-                    <div class="form-group" style="float: right;padding-right: 60px;">
-                        <input class="btn btn-primary" type="submit"/>
-                        <button class="btn btn-primary" type="reset">重置</button>
-                        <button class="btn btn-primary" onclick="javascript:history.back(-1);" type="button">返回</button>
-                    </div>
-                    <div class="form-group errors">{{ error }}</div>
-                    <script>
-                        $(function () {
-                            $('form').bootstrapValidator({
-                                message: 'This value is not valid',
-                                feedbackIcons: {
-                                    valid: 'glyphicon glyphicon-ok',
-                                    invalid: 'glyphicon glyphicon-remove',
-                                    validating: 'glyphicon glyphicon-refresh'
-                                },
-                                fields: {
-                                    name: {
-                                        message: '模块名称验证失败',
-                                        validators: {
-                                            notEmpty: {
-                                                message: '模块名称不能为空'
-                                            },
-                                            stringLength: {
-                                                min: 6,
-                                                max: 18,
-                                                message: '模块名称长度必须在6到18位之间'
-                                            },
-                                            regexp: {
-                                                regexp: /^[a-zA-Z0-9_]+$/,
-                                                message: '模块名称只能包含大写、小写、数字和下划线'
-                                            }
-                                        }
-                                    },
-                                    detail: {
-                                        validators: {
-                                            notEmpty: {
-                                                message: '模块详情不能为空'
-                                            }
-                                        }
-                                    },
-                                    remark: {
-                                        validators: {
-                                            stringLength: {
-                                                max: 100,
-                                                message: '备注长度不能超过100'
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-                        });
-                    </script>
-                </form>
             </div>
 
         </div>

@@ -27,14 +27,10 @@ class ProjectForm(forms.Form):
         label_suffix=':'
 
     )
-    creator = forms.CharField(label='创建人')
-    type = forms.ChoiceField(choices=project_type, label='项目类型',
-                             widget=forms.TextInput(
-                                 attrs={
-                                     'class': 'form-control',
-                                     'placeholder': '请输入项目名称'
-                                 }
-                             ), )
+
+    type = forms.CharField( widget=forms.Select(choices=project_type,
+                            attrs={'class': 'selectpicker  bla bli form-control', 'data-live-search': 'true',
+                                   'style': 'display: none'}), label='项目类型')
 
     detail = forms.CharField(max_length=100, required=False,
                              widget=forms.TextInput(
@@ -52,7 +48,9 @@ class ModuleForm(forms.Form):
         project_list.append(t)
     name = forms.CharField(
         required=True,
-        empty_value='',
+        empty_value='111',
+        max_length=18,
+        min_length=4,
         error_messages={
             'required': '模块名称不能为空',
             'invalid': '请输入正确的模块名称'
@@ -64,10 +62,11 @@ class ModuleForm(forms.Form):
             }
         ),
         label='模块名称',
-        label_suffix=':'
+        label_suffix=':'   #style="display: none"
+                              # readonly="readonly"
 
     )
-    belong_project = forms.IntegerField(
+    belong_project = forms.CharField(
         widget=forms.Select(choices=tuple(project_list),
                             attrs={'class': 'selectpicker  bla bli form-control', 'data-live-search': 'true',
                                    'style': 'display: none'}), label='所属项目')

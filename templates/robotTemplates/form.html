@@ -1,0 +1,20 @@
+<form class="form-horizontal" action=" " method="POST">
+    {% for obj in obj_form %}
+        <div class="form-group">
+            <label class="col-md-2 control-label" for={{ obj.id_for_label }}>{{ obj.label }}</label>
+            <div class="col-md-4">
+                {{ obj }}<p>{% if obj.errors.0 %}{{ obj.errors.0 }}{% endif %}</p>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="form-group">
+        <input class="form-control" id='creator' name="creator" style="display: none"
+               readonly="readonly" value={{ request.user.id }} title="creator"/>
+    </div>
+    <div class="form-group" style="float: right;padding-right: 60px;">
+        <input class="btn btn-primary" type="submit"/>
+        <button class="btn btn-primary" type="reset">重置</button>
+        <button class="btn btn-primary" onclick="history.back(-1);" type="button">返回</button>
+    </div>
+    <div class="form-group errors">{{ error }}</div>
+</form>

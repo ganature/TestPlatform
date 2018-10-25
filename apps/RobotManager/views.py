@@ -97,7 +97,8 @@ class ProjectAddView(View):
     """
 
     def get(self, request):
-        return render(request, 'robotTemplates/robot_project_add.html')
+        project_form=ProjectForm()
+        return render(request, 'robotTemplates/robot_project_add.html',{'obj_form':project_form})
 
     def post(self, request):
         project_form = ProjectForm(request.POST)
@@ -148,7 +149,7 @@ class ModuleAddView(View):
             })
             return render(request,'robotTemplates/robot_module_edit.html',{'obj':module,'obj_form':obj_form})
 
-        return render(request, 'robotTemplates/robot_module_add.html',{'obj_form':module_form,'obj':module})
+        return render(request, 'robotTemplates/robot_module_add.html',{'obj_form':module_form})
 
     @staticmethod
     def post(request):
