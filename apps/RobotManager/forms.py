@@ -39,13 +39,13 @@ class ProjectForm(forms.Form):
 
 
 class ModuleForm(forms.Form):
-    project = Project.objects.all()
-    project_list = []
-    for p in project:
-        t = []
-        t.append(p.id)
-        t.append(p.name)
-        project_list.append(t)
+    # project = Project.objects.all()
+    # project_list = []
+    # for p in project:
+    #     t = []
+    #     t.append(p.id)
+    #     t.append(p.name)
+    #     project_list.append(t)
     name = forms.CharField(
         required=True,
         empty_value='111',
@@ -67,14 +67,16 @@ class ModuleForm(forms.Form):
 
     )
     belong_project = forms.CharField(
-        widget=forms.Select(choices=tuple(project_list),
+        widget=forms.Select(choices=[],
                             attrs={'class': 'selectpicker  bla bli form-control', 'data-live-search': 'true',
-                                   'style': 'display: none'}), label='所属项目')
+                                   'style': 'display: none'}),empty_value='请选择',label='所属项目')
     detail = forms.CharField(max_length=100, required=False,
                              widget=forms.TextInput(
                                  attrs={'class': 'form-control text-success', 'placeholder': '请输入备注'}),
                              label='备注')
-
+    def __init__(self, *args, **kwargs):
+        super(ModuleForm,self).__init__(*args,**kwargs)
+        self.fields['belong_project'].choices=Project.objects.all().values_list('id','name')
 
 class SuiteForm(forms.Form):
     suite_num = forms.CharField(min_length=4, max_length=20, required=True, empty_value='',

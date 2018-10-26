@@ -7,52 +7,52 @@
             </div>
             <div class="panel-body">
                 {% include 'robotTemplates/form.html' %}
-{#                    <script>#}
-{#                        $(function () {#}
-{#                            $('form').bootstrapValidator({#}
-{#                                message: 'This value is not valid',#}
-{#                                feedbackIcons: {#}
-{#                                    valid: 'glyphicon glyphicon-ok',#}
-{#                                    invalid: 'glyphicon glyphicon-remove',#}
-{#                                    validating: 'glyphicon glyphicon-refresh'#}
-{#                                },#}
-{#                                fields: {#}
-{#                                    name: {#}
-{#                                        message: '模块名称验证失败',#}
-{#                                        validators: {#}
-{#                                            notEmpty: {#}
-{#                                                message: '模块名称不能为空'#}
-{#                                            },#}
-{#                                            stringLength: {#}
-{#                                                min: 6,#}
-{#                                                max: 18,#}
-{#                                                message: '模块名称长度必须在6到18位之间'#}
-{#                                            },#}
-{#                                            regexp: {#}
-{#                                                regexp: /^[a-zA-Z0-9_]+$/,#}
-{#                                                message: '模块名称只能包含大写、小写、数字和下划线'#}
-{#                                            }#}
-{#                                        }#}
-{#                                    },#}
-{#                                    detail: {#}
-{#                                        validators: {#}
-{#                                            notEmpty: {#}
-{#                                                message: '模块详情不能为空'#}
-{#                                            }#}
-{#                                        }#}
-{#                                    },#}
-{#                                    remark: {#}
-{#                                        validators: {#}
-{#                                            stringLength: {#}
-{#                                                max: 100,#}
-{#                                                message: '备注长度不能超过100'#}
-{#                                            }#}
-{#                                        }#}
-{#                                    }#}
-{#                                }#}
-{#                            });#}
-{#                        });#}
-{#                    </script>#}
+                    <script>
+                        $(function () {
+                            $('form').bootstrapValidator({
+                                message: 'This value is not valid',
+                                feedbackIcons: {
+                                    valid: 'glyphicon glyphicon-ok',
+                                    invalid: 'glyphicon glyphicon-remove',
+                                    validating: 'glyphicon glyphicon-refresh'
+                                },
+                                fields: {
+                                    name: {
+                                        message: '模块名称验证失败',
+                                        validators: {
+                                            notEmpty: {
+                                                message: '模块名称不能为空'
+                                            },
+                                            stringLength: {
+                                                min: 6,
+                                                max: 18,
+                                                message: '模块名称长度必须在6到18位之间'
+                                            },
+                                            regexp: {
+                                                regexp: /^[a-zA-Z0-9_]+$/,
+                                                message: '模块名称只能包含大写、小写、数字和下划线'
+                                            }
+                                        }
+                                    },
+                                    detail: {
+                                        validators: {
+                                            notEmpty: {
+                                                message: '模块详情不能为空'
+                                            }
+                                        }
+                                    },
+                                    remark: {
+                                        validators: {
+                                            stringLength: {
+                                                max: 100,
+                                                message: '备注长度不能超过100'
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    </script>
 
             </div>
 

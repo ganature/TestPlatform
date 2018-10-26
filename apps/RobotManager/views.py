@@ -144,9 +144,10 @@ class ModuleAddView(View):
             module=Module.objects.get(id=id)
             obj_form=ModuleForm({
                 'name':module.name,
-                'belong_project':module.belong_project,
+
                 'detail':module.detail
             })
+
             return render(request,'robotTemplates/robot_module_edit.html',{'obj':module,'obj_form':obj_form})
 
         return render(request, 'robotTemplates/robot_module_add.html',{'obj_form':module_form})

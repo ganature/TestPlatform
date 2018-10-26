@@ -50,6 +50,9 @@ class Module(models.Model):
     def __str__(self):
         return self.name
 
+    def get_belong_project(self,id):
+        module=Module.objects.get(id=id)
+        project=Project.objects.get()
 
 class Suites(models.Model):
     """

@@ -1,6 +1,7 @@
 <form class="form-horizontal" action=" " method="POST">
     {% for obj in obj_form %}
         <div class="form-group">
+        {% csrf_token %}
             <label class="col-md-2 control-label" for={{ obj.id_for_label }}>{{ obj.label }}</label>
             <div class="col-md-4">
                 {{ obj }}<p>{% if obj.errors.0 %}{{ obj.errors.0 }}{% endif %}</p>
