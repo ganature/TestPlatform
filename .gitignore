@@ -6,5 +6,5 @@ db.sqlite
 mytest*.py
 .idea/workspace.xml
 requirement-new.txt
-/migrations
+apps/RobotManager/migrations
 .vscode

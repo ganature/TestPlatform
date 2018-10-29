@@ -15,9 +15,11 @@ import json
 
 # Create your views here.
 from apps.users.models import UserProfile
+
+from apps.users.models import UserProfile
 from apps.RobotManager.models import Project, Module, Cases, \
     Suites, Keyword, UserKeywords, Steps, Resource, CasesStep
-from apps.RobotManager.forms import ProjectForm, SuiteForm, ModuleForm
+from apps.RobotManager.forms import ProjectForm, SuiteForm, ModuleForm,ModuleQueryForm
 from django.core.paginator import Paginator
 
 
@@ -56,17 +58,23 @@ class ProjectView(View):
     def get(self, request):
         project_form = ProjectForm()
         project = Project.objects.all()
-        search_keyword=request.GET.get('project_name')
-        print(search_keyword)
+        search_keyword = request.GET.get('project_name')
+        search_type=request.GET.get('project_type')
+        print(search_type)
+        search_dict={}
         if search_keyword:
-            project=Project.objects.filter(name__contains=search_keyword)
-
-        print(Project)
+            search_dict['name']=search_keyword
+        if search_type:
+            search_dict['type']=search_type
+        # if search_keyword:
+        #     project = Project.objects.filter(name__contains=search_keyword,type__contains=search_type)
+        project=Project.objects.filter(**search_dict)
+        # print(Project)
 
         paginator_obj = Paginator(project, 10)  # 每页10条
         request_page_num = request.GET.get('page', 1)
         project_obj = paginator_obj.page(request_page_num)
-        
+
         total_page_number = paginator_obj.num_pages
 
         project_list = get_pages(int(total_page_number), int(request_page_num))
@@ -82,13 +90,27 @@ class ProjectEditView(View):
 
     def get(self, request, id):
         project = Project.objects.get(id=id)
-        return render(request, 'robotTemplates/robot_project_edit.html', {'project': project})
+        print(project.creator)
+        user = UserProfile.objects.get(username=project.creator)
+        print(user.username)
+        project_form = ProjectForm(
+            {'name': project.name,
+             'type': project.type,
+             'creator': user.username,
+             'detail': project.detail}
+        )
+        return render(request, 'robotTemplates/robot_project_edit.html', {'obj_form': project_form})
 
-    def post(self, request):
-        project_form = ProjectForm(request)
+    def post(self, request, id):
+        project_form = ProjectForm(request.POST)
         if project_form.is_valid():
-            project_form.save()
-        return render(request, 'project_list.html')
+            project = Project.objects.get(id=id)
+            project.name = request.POST['name']
+            project.type = request.POST['type']
+            project.detail = request.POST['detail']
+            project.creator = UserProfile.objects.get(username=request.user)
+            project.save()
+        return HttpResponseRedirect(reverse('project_list'))
 
 
 class ProjectAddView(View):
@@ -97,15 +119,25 @@ class ProjectAddView(View):
     """
 
     def get(self, request):
-        project_form=ProjectForm()
-        return render(request, 'robotTemplates/robot_project_add.html',{'obj_form':project_form})
+
+        user = UserProfile.objects.get(username=request.user)
+
+        project_form = ProjectForm(
+            {'creator': user.username}
+        )
+
+        return render(request, 'robotTemplates/robot_project_add.html', {'obj_form': project_form})
 
     def post(self, request):
         project_form = ProjectForm(request.POST)
-        print(request.POST)
-        # project_form.creator=request.POST['creator']
+
         if project_form.is_valid():
-            project_form.save()
+            name = request.POST['name']
+            type = request.POST['type']
+            detail = request.POST['detail']
+            creator = UserProfile.objects.get(username=request.user)
+            project = Project(name=name, type=type, detail=detail, creator=creator)
+            project.save()
         else:
             return render(request, 'robotTemplates/robot_project_add.html', {'error': project_form.errors})
         return HttpResponseRedirect(reverse('project_list'))
@@ -117,7 +149,7 @@ class ModuleView(View):
     """
 
     def get(self, request):
-        module_form = ModuleForm()
+        module_form = ModuleQueryForm()
         module = Module.objects.all()
         paginator_obj = Paginator(module, 10)  # 每页10条
         request_page_num = request.GET.get('page', 1)
@@ -136,49 +168,58 @@ class ModuleAddView(View):
     模块/包新增页面
     """
 
+    def get(self, request):
 
-    def get(self,request,id=None):
-        module = Module.objects.all()
         module_form = ModuleForm()
-        if id:
-            module=Module.objects.get(id=id)
-            obj_form=ModuleForm({
-                'name':module.name,
 
-                'detail':module.detail
-            })
 
-            return render(request,'robotTemplates/robot_module_edit.html',{'obj':module,'obj_form':obj_form})
+        return render(request, 'robotTemplates/robot_module_add.html', {'obj_form': module_form})
 
-        return render(request, 'robotTemplates/robot_module_add.html',{'obj_form':module_form})
-
-    @staticmethod
-    def post(request):
-        module=Module()
+    def post(self, request):
         module_form = ModuleForm(request.POST)
         if module_form.is_valid():
-            module.name=request.POST['name']
-            module.belong_project=request.POST['belong_project']
-            module.detail=request.POST['detail']
+            name = request.POST['name']
+            belong_project = Project.objects.get(id=request.POST['belong_project'])
+            creator=UserProfile.objects.get(username=request.user)
+            detail = request.POST['detail']
+            module = Module(name=name, belong_project=belong_project, creator=creator,detail=detail)
             module.save()
         else:
             return render(request, 'robotTemplates/robot_module_add.html', {'error': module_form.errors})
         return HttpResponseRedirect(reverse('module_list'))
 
+
 class ModuleListView(View):
     """
     模块列表
     """
-    def get(self,request):
-        module=Module.objects.all()
-        return render(request,'robotTemplates/robot_module_list.html',{'obj':module})
+
+    def get(self, request):
+        module = Module.objects.all()
+        return render(request, 'robotTemplates/robot_module_list.html', {'obj': module})
+
 
 class ModuleEditView(View):
-    def get(self,request,id):
-        project=Project.objects.get(id=id)
-        project_form=ProjectForm()
+    def get(self, request, id):
+        module = Module.objects.get(id=id)
+        m=Module.objects.filter(id=id)
+        project_name=Project.objects.get(id=module.belong_project_id)
+        obj_form = ModuleForm({
+            'name': module.name,
+            'belong_project':project_name.id,
+            'detail': module.detail
+        })
 
+        return render(request, 'robotTemplates/robot_module_edit.html', { 'obj_form': obj_form})
 
+    def post(self,request,id):
+        module_form=ModuleForm(request.POST)
+        if module_form.is_valid():
+            module=Module.objects.get(id=id)
+            module.name=request.POST['name']
+            module.belong_project=Project.objects.get(request.POST['belong_project'])
+            module.detail=module_form.cleaned_data['detail']
+            module.save()
 
 class SuiteAddView(View):
     """

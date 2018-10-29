@@ -7,7 +7,7 @@ from apps.RobotManager.models import Project,Module,Cases,Suites,Steps \
 
 
 class ProjectAdmin(object):
-    list_display = ['name','type','creator','detail','remark','addtime','edittime']
+    list_display = ['name','type','creator','detail','remark','add_time','edit_time']
     search_fields = ['name','type','creator']
     list_filter = ['name','type','creator']
 

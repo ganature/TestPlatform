@@ -60,7 +60,7 @@ urlpatterns = [
     #   robot模块路由
     path('robot_module_list/', RobotManager_Views.ModuleView.as_view(), name='module_list'),
     path('robot_module_add/', RobotManager_Views.ModuleAddView.as_view(), name='module_add'),
-    path('robot_module_edit/<int:id>/',RobotManager_Views.ModuleAddView.as_view(),name='module_detail'),
+    path('robot_module_edit/<int:id>/',RobotManager_Views.ModuleEditView.as_view(),name='module_detail'),
     path('robot_suite_add/', RobotManager_Views.SuiteAddView.as_view(), name='suite_add'),
     # Restframework设置
     path('docs', include_docs_urls(title='REST文档')),

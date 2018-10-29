@@ -16,7 +16,7 @@ class Project(models.Model):
         ('inface','接口自动化')
     )
     name = models.CharField(max_length=18,verbose_name=u'项目名称',unique=True)
-    type = models.CharField(max_length=20,choices=project_type,verbose_name=u'项目类型')
+    type = models.CharField(max_length=20,choices=project_type,default=0,verbose_name=u'项目类型')
     creator = models.ForeignKey(UserProfile,verbose_name=u'创建人',on_delete=models.SET_NULL,null=True,blank=True)
     detail = models.CharField(max_length=50,verbose_name=u'项目描述')
     remark = models.TextField(max_length=200,blank=True,null=True,verbose_name=u'备注')

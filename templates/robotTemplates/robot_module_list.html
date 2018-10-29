@@ -6,26 +6,43 @@
             <div class="panel panel-default">
                 <div class="panel-heading">查询条件</div>
                 <div class="panel-body">
-                    <form id="formSearch" class="form-horizontal">
-                        <div class="form-group" style="margin-top:15px">
-                            <label class="control-label col-sm-1" for="txt_search_departmentname">模块名称</label>
-                            <div class="col-sm-3">
-                                <input type="text" class="form-control" id="txt_search_departmentname">
-                            </div>
-                            <label class="control-label col-sm-1" for="txt_search_type">所属项目</label>
-                            <div class="col-sm-3">
-                                <select class="selectpicker" id="module_search_type">
-                                    <option value="web">Web自动化</option>
-                                    <option value="app">App自动化</option>
-                                    <option value="inface">接口自动化</option>
-                                </select>
-                            </div>
+                    <form id="formSearch" class="form-inline">
+                        <div class="form-group">
+                            <label class="control-label " for={{ obj_form.name.id_for_label }}>{{ obj_form.name.label }}</label>
+                            {{ obj_form.name }}
+
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label " >{{ obj_form.belong_project.label }}</label>
+                            {{ obj_form.belong_project }}
+
+                        </div>
+                        <div class="form-group">
                             <div class="col-sm-4" style="text-align:left;">
                                 <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">
                                     查询
                                 </button>
                             </div>
                         </div>
+{#                        <div class="form-group" style="margin-top:15px">#}
+{#                            <label class="control-label col-sm-1" for="txt_search_departmentname">模块名称</label>#}
+{#                            <div class="col-sm-3">#}
+{#                                <input type="text" class="form-control" id="txt_search_departmentname">#}
+{#                            </div>#}
+{#                            <label class="control-label col-sm-1" for="txt_search_type">所属项目</label>#}
+{#                            <div class="col-sm-3">#}
+{#                                <select class="selectpicker" id="module_search_type">#}
+{#                                    <option value="web">Web自动化</option>#}
+{#                                    <option value="app">App自动化</option>#}
+{#                                    <option value="inface">接口自动化</option>#}
+{#                                </select>#}
+{#                            </div>#}
+{#                            <div class="col-sm-4" style="text-align:left;">#}
+{#                                <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">#}
+{#                                    查询#}
+{#                                </button>#}
+{#                            </div>#}
+{#                        </div>#}
                     </form>
                 </div>
             </div>
@@ -54,10 +71,10 @@
                     <th>{{ obj_form.name.label }} </th>
 
                     <th>{{ obj_form.belong_project.label }}</th>
-                    <th>{{ obj_form.creator.label }}</th>
+                    <th>创建人</th>
                     <th>{{ obj_form.detail.label }}</th>
-                    <th>{{ obj_form.addtime.label }}</th>
-                    <th>{{ obj_form.edittime.label }} </th>
+                    <th>创建时间</th>
+                    <th>修改时间</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -69,8 +86,8 @@
                         <td>{{ p.belong_project }}</td>
                         <td>{{ p.creator }}</td>
                         <td>{{ p.detail }}</td>
-                        <td>{{ p.addtime }}</td>
-                        <td>{{ p.edittime }}</td>
+                        <td>{{ p.add_time }}</td>
+                        <td>{{ p.edit_time }}</td>
                     </tr>
                 {% endfor %}
 
