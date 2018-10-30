@@ -19,7 +19,7 @@ from apps.users.models import UserProfile
 from apps.users.models import UserProfile
 from apps.RobotManager.models import Project, Module, Cases, \
     Suites, Keyword, UserKeywords, Steps, Resource, CasesStep
-from apps.RobotManager.forms import ProjectForm, SuiteForm, ModuleForm
+from apps.RobotManager.forms import ProjectForm, SuiteForm, ModuleForm,CaseForm
 from django.core.paginator import Paginator
 
 
@@ -236,18 +236,19 @@ class CaseListView(View):
     用例模块列表视图
     """
     def get(self,request):
-        module_list = Project.objects.all ()
-        search_keyword = request.GET.get ('case_name')
-        search_module = request.GET.get ('module')
+        case_form=CaseForm()
+        project_list = Project.objects.all ()
+        # search_keyword = request.GET.get ('case_name')
+        # search_module = request.GET.get ('module')
+        #
+        # search_dict = {}
+        # if search_keyword:
+        #     search_dict['name'] = search_keyword
+        # if search_module:
+        #     p = Project.objects.get (name=search_module)
+        #     search_dict['belong_module'] = p.id
 
-        search_dict = {}
-        if search_keyword:
-            search_dict['name'] = search_keyword
-        if search_module:
-            p = Project.objects.get (name=search_module)
-            search_dict['belong_module'] = p.id
-
-        case = Module.objects.filter (**search_dict)
+        case = Cases.objects.all()
         paginator_obj = Paginator (case, 10)  # 每页10条
         request_page_num = request.GET.get ('page', 1)
         case_obj = paginator_obj.page (request_page_num)
@@ -257,7 +258,7 @@ class CaseListView(View):
         case_list = get_pages (int (total_page_number), int (request_page_num))
 
         return render (request, 'robotTemplates/robot_case_list.html',
-                       {'obj': case_obj, 'obj_list': case_list, 'module_list': module_list})
+                       {'obj': case_obj, 'obj_list': case_list, 'project_list': project_list,'obj_form':case_form})
 
 
 class SuiteAddView(View):
