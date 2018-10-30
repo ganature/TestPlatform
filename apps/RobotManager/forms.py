@@ -4,15 +4,15 @@ from apps.RobotManager.models import Project, Module, Cases, \
     Suites, Keyword, UserKeywords, Steps, Resource, CasesStep
 
 
-class ProjectForm(forms.Form):
-    name = forms.CharField(
+class ProjectForm (forms.Form):
+    name = forms.CharField (
         required=True,
         empty_value='',
         error_messages={
             'required': '项目名称不能为空',
             'invalid': '请输入正确的测试名称'
         },
-        widget=forms.TextInput(
+        widget=forms.TextInput (
             attrs={
                 'class': 'form-control',
                 'placeholder': '请输入项目名称'
@@ -23,28 +23,26 @@ class ProjectForm(forms.Form):
 
     )
 
-    type = forms.CharField(widget=forms.Select(choices=[],
-                                               attrs={'class': 'selectpicker  bla bli form-control',
-                                                      'data-live-search': 'true',
-                                                      'style': 'display: none'}), label='项目类型')
+    type = forms.CharField (widget=forms.Select (choices=[],
+                                                 attrs={'class': 'selectpicker  bla bli form-control',
+                                                        'data-live-search': 'true',
+                                                        'style': 'display: none'}), label='项目类型')
 
-    detail = forms.CharField(max_length=100, required=False,
-                             widget=forms.TextInput(
-                                 attrs={'class': 'form-control text-success', 'placeholder': '请输入备注'}),
-                             label='备注')
-    creator = forms.CharField(widget=forms.TextInput(
-        attrs={'class': "form-control",'style':"display:None"}
-    ),label=' ')
-
+    detail = forms.CharField (max_length=100, required=False,
+                              widget=forms.TextInput (
+                                  attrs={'class': 'form-control text-success', 'placeholder': '请输入备注'}),
+                              label='备注')
+    creator = forms.CharField (widget=forms.TextInput (
+        attrs={'class': "form-control", 'style': "display:None"}
+    ), label=' ')
 
     def __init__(self, *args, **kwargs):
-        super(ProjectForm, self).__init__(*args, **kwargs)
-        self.fields['type'].widget.choices=Project.project_type
+        super (ProjectForm, self).__init__ (*args, **kwargs)
+        self.fields['type'].widget.choices = Project.project_type
 
 
-class ModuleForm(forms.Form):
-
-    name = forms.CharField(
+class ModuleForm (forms.Form):
+    name = forms.CharField (
         required=True,
         empty_value='111',
         max_length=18,
@@ -53,7 +51,7 @@ class ModuleForm(forms.Form):
             'required': '模块名称不能为空',
             'invalid': '请输入正确的模块名称'
         },
-        widget=forms.TextInput(
+        widget=forms.TextInput (
             attrs={
                 'class': 'form-control',
                 'placeholder': '请输入模块名称'
@@ -64,58 +62,38 @@ class ModuleForm(forms.Form):
         # readonly="readonly"
 
     )
-    belong_project = forms.CharField(
-        widget=forms.Select(choices=[],
-                            attrs={'class': 'selectpicker  bla bli form-control', 'data-live-search': 'true',
-                                   'style': 'display: none'}), empty_value='请选择', label='所属项目')
-    detail = forms.CharField(max_length=100, required=False,
-                             widget=forms.TextInput(
-                                 attrs={'class': 'form-control text-success', 'placeholder': '请输入备注'}),
-                             label='备注')
+    belong_project = forms.CharField (
+        widget=forms.Select (choices=[],
+                             attrs={'class': 'selectpicker  bla bli form-control', 'data-live-search': 'true',
+                                    'style': 'display: none'}), empty_value='请选择', label='所属项目')
+    detail = forms.CharField (max_length=100, required=False,
+                              widget=forms.TextInput (
+                                  attrs={'class': 'form-control text-success', 'placeholder': '请输入备注'}),
+                              label='备注')
 
     def __init__(self, *args, **kwargs):
-        super(ModuleForm, self).__init__(*args, **kwargs)
-        self.fields['belong_project'].widget.choices = Project.objects.all().values_list('id', 'name')
+        super (ModuleForm, self).__init__ (*args, **kwargs)
+        self.fields['belong_project'].widget.choices = Project.objects.all ().values_list ('id', 'name')
 
-class ModuleQueryForm(forms.Form):
-    """
-    模块查询Form
-    """
-    name=forms.CharField(
-        widget=forms.TextInput(
-            attrs={
 
-                'placeholder': '请输入模块名称'
-            }
-        ),
-        label='模块名称'
-    )
-    belong_project = forms.CharField(
-        widget=forms.Select(choices=[],
-                            attrs={'class': 'selectpicker ', 'data-live-search': 'true'
-                                }), empty_value='请选择', label='所属项目')
-    def __init__(self, *args, **kwargs):
-        super(ModuleQueryForm, self).__init__(*args, **kwargs)
-        self.fields['belong_project'].widget.choices = Project.objects.all().values_list('id', 'name')
+class SuiteForm (forms.Form):
+    suite_num = forms.CharField (min_length=4, max_length=20, required=True, empty_value='',
+                                 error_messages={
+                                     'required': '测试集编号不能为空',
+                                     'invalid': '请输入4-20测试集编号',
+                                 },
+                                 widget=forms.TextInput (attrs={'class': 'form-control', 'placeholder': '请输入测试编号'}),
+                                 label='测试集编号')
 
-class SuiteForm(forms.Form):
-    suite_num = forms.CharField(min_length=4, max_length=20, required=True, empty_value='',
-                                error_messages={
-                                    'required': '测试集编号不能为空',
-                                    'invalid': '请输入4-20测试集编号',
-                                },
-                                widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入测试编号'}),
-                                label='测试集编号')
+    name = forms.CharField (min_length=4, max_length=18, required=True, empty_value='',
+                            error_messages={
+                                'required': '名称不能为空'
+                            },
+                            widget=forms.TextInput (
+                                attrs={'class': 'form-control text-success', 'placeholder': '请输入测试名称'}),
+                            label='测试集名称')
 
-    name = forms.CharField(min_length=4, max_length=18, required=True, empty_value='',
-                           error_messages={
-                               'required': '名称不能为空'
-                           },
-                           widget=forms.TextInput(
-                               attrs={'class': 'form-control text-success', 'placeholder': '请输入测试名称'}),
-                           label='测试集名称')
-
-    detail = forms.CharField(max_length=100, required=False,
-                             widget=forms.TextInput(
-                                 attrs={'class': 'form-control text-success', 'placeholder': '请输入备注'}),
-                             label='备注')
+    detail = forms.CharField (max_length=100, required=False,
+                              widget=forms.TextInput (
+                                  attrs={'class': 'form-control text-success', 'placeholder': '请输入备注'}),
+                              label='备注')

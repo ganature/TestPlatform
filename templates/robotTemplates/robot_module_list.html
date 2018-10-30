@@ -7,19 +7,29 @@
                 <div class="panel-heading">查询条件</div>
                 <div class="panel-body">
                     <form id="formSearch" class="form-inline">
-                        <div class="form-group">
-                            <label class="control-label " for={{ obj_form.name.id_for_label }}>{{ obj_form.name.label }}</label>
-                            {{ obj_form.name }}
+                        <div class="form-group col-md-3">
+                            <label class="control-label col-sm-4 " for="module_name">模块名称</label>
+
+                            <div class="col-sm-3">
+                                <input class="form-control" name="module_name" id="module_name">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label col-sm-4 " >项目</label>
+                            <div class="col-md-6">
+                            <select class="selectpicker form-control " data-live-search="true" title="项目" name="project">
+
+                                {% for p in  project_list %}
+                                    <option >{{ p.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
 
                         </div>
-                        <div class="form-group">
-                            <label class="control-label " >{{ obj_form.belong_project.label }}</label>
-                            {{ obj_form.belong_project }}
-
-                        </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-3">
                             <div class="col-sm-4" style="text-align:left;">
-                                <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">
+                                <button type="submit" style="margin-left:50px" id="btn_query" class="btn btn-primary">
                                     查询
                                 </button>
                             </div>

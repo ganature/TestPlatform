@@ -2,7 +2,7 @@
 
     {% for field in obj_form %}
         <div class="form-group">
-        {% csrf_token %}
+        {{ csrf_input }}
             <label class="col-md-2 control-label" for={{ field.id_for_label }}>{{ field.label }}</label>
             <div class="col-md-4">
                 {{ field }}<p>{{ field.error }}</p>

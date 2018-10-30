@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from rest_framework import mixins
 from rest_framework import viewsets
-from django_filters.rest_framework import DjangoFilterBackend
+# from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.response import Response
 from django.http import JsonResponse
@@ -19,7 +19,7 @@ from apps.users.models import UserProfile
 from apps.users.models import UserProfile
 from apps.RobotManager.models import Project, Module, Cases, \
     Suites, Keyword, UserKeywords, Steps, Resource, CasesStep
-from apps.RobotManager.forms import ProjectForm, SuiteForm, ModuleForm,ModuleQueryForm
+from apps.RobotManager.forms import ProjectForm, SuiteForm, ModuleForm
 from django.core.paginator import Paginator
 
 
@@ -90,9 +90,9 @@ class ProjectEditView(View):
 
     def get(self, request, id):
         project = Project.objects.get(id=id)
-        print(project.creator)
+
         user = UserProfile.objects.get(username=project.creator)
-        print(user.username)
+
         project_form = ProjectForm(
             {'name': project.name,
              'type': project.type,
@@ -149,8 +149,18 @@ class ModuleView(View):
     """
 
     def get(self, request):
-        module_form = ModuleQueryForm()
-        module = Module.objects.all()
+        project_list = Project.objects.all()
+        search_keyword = request.GET.get ('module_name')
+        search_project = request.GET.get ('project')
+
+        search_dict = {}
+        if search_keyword:
+            search_dict['name'] = search_keyword
+        if search_project:
+            p=Project.objects.get(name=search_project)
+            search_dict['belong_project']=p.id
+
+        module = Module.objects.filter (**search_dict)
         paginator_obj = Paginator(module, 10)  # 每页10条
         request_page_num = request.GET.get('page', 1)
         module_obj = paginator_obj.page(request_page_num)
@@ -160,7 +170,7 @@ class ModuleView(View):
         module_list = get_pages(int(total_page_number), int(request_page_num))
 
         return render(request, 'robotTemplates/robot_module_list.html',
-                      {'obj': module_obj, 'obj_list': module_list, 'obj_form': module_form})
+                      {'obj': module_obj, 'obj_list': module_list, 'project_list': project_list})
 
 
 class ModuleAddView(View):
@@ -220,6 +230,35 @@ class ModuleEditView(View):
             module.belong_project=Project.objects.get(request.POST['belong_project'])
             module.detail=module_form.cleaned_data['detail']
             module.save()
+
+class CaseListView(View):
+    """
+    用例模块列表视图
+    """
+    def get(self,request):
+        module_list = Project.objects.all ()
+        search_keyword = request.GET.get ('case_name')
+        search_module = request.GET.get ('module')
+
+        search_dict = {}
+        if search_keyword:
+            search_dict['name'] = search_keyword
+        if search_module:
+            p = Project.objects.get (name=search_module)
+            search_dict['belong_module'] = p.id
+
+        case = Module.objects.filter (**search_dict)
+        paginator_obj = Paginator (case, 10)  # 每页10条
+        request_page_num = request.GET.get ('page', 1)
+        case_obj = paginator_obj.page (request_page_num)
+
+        total_page_number = paginator_obj.num_pages
+
+        case_list = get_pages (int (total_page_number), int (request_page_num))
+
+        return render (request, 'robotTemplates/robot_case_list.html',
+                       {'obj': case_obj, 'obj_list': case_list, 'module_list': module_list})
+
 
 class SuiteAddView(View):
     """

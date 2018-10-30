@@ -10,7 +10,7 @@ from apps.users.models import UserProfile
 from rest_framework import mixins
 from rest_framework import viewsets
 from apps.users.serializers import UserProfileSerializer
-from django_filters.rest_framework import DjangoFilterBackend
+# from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
 

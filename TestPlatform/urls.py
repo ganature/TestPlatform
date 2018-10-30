@@ -62,6 +62,8 @@ urlpatterns = [
     path('robot_module_add/', RobotManager_Views.ModuleAddView.as_view(), name='module_add'),
     path('robot_module_edit/<int:id>/',RobotManager_Views.ModuleEditView.as_view(),name='module_detail'),
     path('robot_suite_add/', RobotManager_Views.SuiteAddView.as_view(), name='suite_add'),
+    # robot用例路由
+    path('robot_case_list',RobotManager_Views.CaseListView.as_view(),name='case_list'),
     # Restframework设置
     path('docs', include_docs_urls(title='REST文档')),
     path('api_auth', include('rest_framework.urls')),
