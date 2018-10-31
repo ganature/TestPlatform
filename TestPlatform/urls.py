@@ -60,10 +60,15 @@ urlpatterns = [
     #   robot模块路由
     path('robot_module_list/', RobotManager_Views.ModuleView.as_view(), name='module_list'),
     path('robot_module_add/', RobotManager_Views.ModuleAddView.as_view(), name='module_add'),
-    path('robot_module_edit/<int:id>/',RobotManager_Views.ModuleEditView.as_view(),name='module_detail'),
+    path('robot_module_edit/<int:id>/', RobotManager_Views.ModuleEditView.as_view(), name='module_detail'),
+    # robot测试集路由
     path('robot_suite_add/', RobotManager_Views.SuiteAddView.as_view(), name='suite_add'),
+    path('robot_suite_edit/', RobotManager_Views.SuiteEditView.as_view(), name='suite_edit'),
+    path('robot_suite_list/', RobotManager_Views.SuiteListView.as_view(), name='suite_list'),
     # robot用例路由
-    path('robot_case_list',RobotManager_Views.CaseListView.as_view(),name='case_list'),
+    path('robot_case_list/', RobotManager_Views.CaseListView.as_view(), name='case_list'),
+    path('robot_case_add/', RobotManager_Views.CaseAddView.as_view(), name='case_add'),
+    path('robot_case_edit/', RobotManager_Views.CaseEditView.as_view(), name='case_edit'),
     # Restframework设置
     path('docs', include_docs_urls(title='REST文档')),
     path('api_auth', include('rest_framework.urls')),

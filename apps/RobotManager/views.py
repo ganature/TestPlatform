@@ -19,7 +19,7 @@ from apps.users.models import UserProfile
 from apps.users.models import UserProfile
 from apps.RobotManager.models import Project, Module, Cases, \
     Suites, Keyword, UserKeywords, Steps, Resource, CasesStep
-from apps.RobotManager.forms import ProjectForm, SuiteForm, ModuleForm,CaseForm
+from apps.RobotManager.forms import ProjectForm, SuiteForm, ModuleForm, CaseForm
 from django.core.paginator import Paginator
 
 
@@ -59,16 +59,16 @@ class ProjectView(View):
         project_form = ProjectForm()
         project = Project.objects.all()
         search_keyword = request.GET.get('project_name')
-        search_type=request.GET.get('project_type')
+        search_type = request.GET.get('project_type')
         print(search_type)
-        search_dict={}
+        search_dict = {}
         if search_keyword:
-            search_dict['name']=search_keyword
+            search_dict['name'] = search_keyword
         if search_type:
-            search_dict['type']=search_type
+            search_dict['type'] = search_type
         # if search_keyword:
         #     project = Project.objects.filter(name__contains=search_keyword,type__contains=search_type)
-        project=Project.objects.filter(**search_dict)
+        project = Project.objects.filter(**search_dict)
         # print(Project)
 
         paginator_obj = Paginator(project, 10)  # 每页10条
@@ -150,17 +150,17 @@ class ModuleView(View):
 
     def get(self, request):
         project_list = Project.objects.all()
-        search_keyword = request.GET.get ('module_name')
-        search_project = request.GET.get ('project')
+        search_keyword = request.GET.get('module_name')
+        search_project = request.GET.get('project')
 
         search_dict = {}
         if search_keyword:
             search_dict['name'] = search_keyword
         if search_project:
-            p=Project.objects.get(name=search_project)
-            search_dict['belong_project']=p.id
+            p = Project.objects.get(name=search_project)
+            search_dict['belong_project'] = p.id
 
-        module = Module.objects.filter (**search_dict)
+        module = Module.objects.filter(**search_dict)
         paginator_obj = Paginator(module, 10)  # 每页10条
         request_page_num = request.GET.get('page', 1)
         module_obj = paginator_obj.page(request_page_num)
@@ -181,8 +181,6 @@ class ModuleAddView(View):
     def get(self, request):
 
         module_form = ModuleForm()
-
-
         return render(request, 'robotTemplates/robot_module_add.html', {'obj_form': module_form})
 
     def post(self, request):
@@ -190,9 +188,9 @@ class ModuleAddView(View):
         if module_form.is_valid():
             name = request.POST['name']
             belong_project = Project.objects.get(id=request.POST['belong_project'])
-            creator=UserProfile.objects.get(username=request.user)
+            creator = UserProfile.objects.get(username=request.user)
             detail = request.POST['detail']
-            module = Module(name=name, belong_project=belong_project, creator=creator,detail=detail)
+            module = Module(name=name, belong_project=belong_project, creator=creator, detail=detail)
             module.save()
         else:
             return render(request, 'robotTemplates/robot_module_add.html', {'error': module_form.errors})
@@ -212,53 +210,103 @@ class ModuleListView(View):
 class ModuleEditView(View):
     def get(self, request, id):
         module = Module.objects.get(id=id)
-        m=Module.objects.filter(id=id)
-        project_name=Project.objects.get(id=module.belong_project_id)
+        m = Module.objects.filter(id=id)
+        project_name = Project.objects.get(id=module.belong_project_id)
         obj_form = ModuleForm({
             'name': module.name,
-            'belong_project':project_name.id,
+            'belong_project': project_name.id,
             'detail': module.detail
         })
 
-        return render(request, 'robotTemplates/robot_module_edit.html', { 'obj_form': obj_form})
+        return render(request, 'robotTemplates/robot_module_edit.html', {'obj_form': obj_form})
 
-    def post(self,request,id):
-        module_form=ModuleForm(request.POST)
+    def post(self, request, id):
+        module_form = ModuleForm(request.POST)
         if module_form.is_valid():
-            module=Module.objects.get(id=id)
-            module.name=request.POST['name']
-            module.belong_project=Project.objects.get(request.POST['belong_project'])
-            module.detail=module_form.cleaned_data['detail']
+            module = Module.objects.get(id=id)
+            module.name = request.POST['name']
+            module.belong_project = Project.objects.get(request.POST['belong_project'])
+            module.detail = module_form.cleaned_data['detail']
             module.save()
+
 
 class CaseListView(View):
     """
     用例模块列表视图
     """
-    def get(self,request):
-        case_form=CaseForm()
-        project_list = Project.objects.all ()
-        # search_keyword = request.GET.get ('case_name')
-        # search_module = request.GET.get ('module')
-        #
-        # search_dict = {}
-        # if search_keyword:
-        #     search_dict['name'] = search_keyword
-        # if search_module:
-        #     p = Project.objects.get (name=search_module)
-        #     search_dict['belong_module'] = p.id
+
+    def get(self, request):
+        case_form = CaseForm()
+        project_list = Project.objects.all()
 
         case = Cases.objects.all()
-        paginator_obj = Paginator (case, 10)  # 每页10条
-        request_page_num = request.GET.get ('page', 1)
-        case_obj = paginator_obj.page (request_page_num)
+        paginator_obj = Paginator(case, 10)  # 每页10条
+        request_page_num = request.GET.get('page', 1)
+        case_obj = paginator_obj.page(request_page_num)
 
         total_page_number = paginator_obj.num_pages
 
-        case_list = get_pages (int (total_page_number), int (request_page_num))
+        case_list = get_pages(int(total_page_number), int(request_page_num))
 
-        return render (request, 'robotTemplates/robot_case_list.html',
-                       {'obj': case_obj, 'obj_list': case_list, 'project_list': project_list,'obj_form':case_form})
+        return render(request, 'robotTemplates/robot_case_list.html',
+                      {'obj': case_obj, 'obj_list': case_list, 'project_list': project_list, 'obj_form': case_form})
+
+
+class CaseAddView(View):
+    """
+    用例新增视图
+    """
+
+    def get(self, request):
+        case_form = CaseForm()
+        print(case_form)
+        print(type(case_form))
+        return render(request, 'robotTemplates/robot_case_add.html', {'obj_form': case_form})
+
+    def post(self, request):
+        case_form = CaseForm(request.POST)
+        user = UserProfile.objects.get(username=request.user)
+        if case_form.is_valid():
+            case_num = request.POST['case_num']
+            name = request.POST['name']
+            type = request.POST['type']
+            level = request.POST['level']
+            creator = user.username
+            case = Cases(case_num=case_num, name=name, type=type, level=level, creator=creator)
+            case.save()
+            return HttpResponse({'msg': '保存成功'})
+        return render(request, 'robotTemplates/robot_case_list.html')
+
+
+class CaseEditView(View):
+    """
+    用例编辑视图
+    """
+
+    def get(self, request, id):
+        case = Cases.objects.get(id=id)
+        case_form = CaseForm({
+            'case_num': case.case_num,
+            'name': case.name,
+            'type': case.type,
+            'level': case.level
+        }
+        )
+        return render(request, 'robotTemplates/robot_case_edit.html', {'obj_form': case_form})
+
+    def post(self, request):
+        case_form = CaseForm(request.POST)
+        user = UserProfile.objects.get(username=request.user)
+        if case_form.is_valid():
+            case_num = request.POST['case_num']
+            name = request.POST['name']
+            type = request.POST['type']
+            level = request.POST['level']
+            creator = user.username
+            case = Cases(case_num=case_num, name=name, type=type, level=level, creator=creator)
+            case.save()
+            return HttpResponse({'msg': '保存成功'})
+        return render(request, 'robotTemplates/robot_case_list.html')
 
 
 class SuiteAddView(View):
@@ -297,3 +345,9 @@ class SuiteListView(View):
         suite_list = get_pages(int(total_page_number), int(request_page_num))
 
         return render(request, 'robotTemplates/robot_suite_list.html', {'obj': suite_obj, 'obj_list': suite_list})
+
+
+class SuiteEditView(View):
+    """
+    测试集编辑视图
+    """

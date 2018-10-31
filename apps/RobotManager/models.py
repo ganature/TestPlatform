@@ -106,13 +106,13 @@ class Cases(models.Model):
     case_num = models.CharField(max_length=20, verbose_name=u'用例编号')
     name = models.CharField(max_length=18, verbose_name=u'用例标题')
     type = models.CharField(
-        max_length=20, choices=case_type, verbose_name=u'用例类型')
+        max_length=20, choices=case_type, default='web',verbose_name=u'用例类型')
     suite = models.ManyToManyField(Suites, verbose_name=u'测试集')
     expect = models.CharField(max_length=50, verbose_name=u'期望结果')
     status = models.CharField(
-        max_length=20, choices=case_status, verbose_name=u'结果')
+        max_length=20, choices=case_status, default='idle',verbose_name=u'结果')
     level = models.CharField(
-        max_length=20, choices=case_level, verbose_name=u'用例级别')
+        max_length=20, choices=case_level, default='low',verbose_name=u'用例级别')
     creator = models.ForeignKey(
         UserProfile, verbose_name=u'创建人', on_delete=models.SET_NULL, null=True, blank=True)
     detail = models.CharField(max_length=50, verbose_name=u'用例描述')
