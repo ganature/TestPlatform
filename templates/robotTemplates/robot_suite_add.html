@@ -44,68 +44,20 @@
                         <button class="btn btn-primary" type="reset">重置</button>
                         <button class="btn btn-primary" onclick="history.back(-1);" type="button">返回</button>
                     </div>
-                    <div class="form-group errors">{{ error }} </div>
+{#                    <div class="form-group errors">{{ error }} </div>#}
                     <script>
+                        toastr.options.positionClass = 'toast-top-center';
+                        toastr.options.showDuration = 100;
                         $(function () {
-                            $('form').bootstrapValidator({
-                                message: 'This value is not valid',
-                                feedbackIcons: {
-                                    valid: 'glyphicon glyphicon-ok',
-                                    invalid: 'glyphicon glyphicon-remove',
-                                    validating: 'glyphicon glyphicon-refresh'
-                                },
-                                fields: {
-                                    suite_num:{
-                                        message: '测试集编号验证失败',
-                                        validators: {
-                                            notEmpty: {
-                                                message: '测试集编号不能为空'
-                                            },
-                                            stringLength: {
-                                                min: 6,
-                                                max: 18,
-                                                message: '测试集编号长度必须在6到18位之间'
-                                            },
-                                            regexp: {
-                                                regexp: /^[a-zA-Z0-9_]+$/,
-                                                message: '测试集编号只能包含大写、小写、数字和下划线'
-                                            }
-                                        }
-                                    },
-                                    name: {
-                                        message: '测试集名称验证失败',
-                                        validators: {
-                                            notEmpty: {
-                                                message: '测试集名称不能为空'
-                                            },
-                                            stringLength: {
-                                                min: 6,
-                                                max: 18,
-                                                message: '测试集名称长度必须在6到18位之间'
-                                            },
-                                            regexp: {
-                                                regexp: /^[a-zA-Z0-9_]+$/,
-                                                message: '测试集名称只能包含大写、小写、数字和下划线'
-                                            }
-                                        }
-                                    },
-                                    detail: {
-                                        validators: {
-                                            notEmpty: {
-                                                message: '项目详情不能为空'
-                                            }
-                                        }
-                                    },
-                                    remark: {
-                                        validators: {
-                                            stringLength: {
-                                                max: 100,
-                                                message: '备注长度不能超过100'
-                                            }
-                                        }
-                                    }
-                                }
-                            });
+                            var s = 100;
+                            var f ={{ error_code }};
+                            if (s === f) {
+                                toastr.success("保存成功");
+
+                            }
+                            else {
+                                toastr.error(error_msg)
+                            }
                         });
                     </script>
                 </form>

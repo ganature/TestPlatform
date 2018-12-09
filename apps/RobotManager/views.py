@@ -259,8 +259,8 @@ class CaseAddView(View):
 
     def get(self, request):
         case_form = CaseForm()
-        print(case_form)
-        print(type(case_form))
+        # print(case_form)
+        # print(type(case_form))
         return render(request, 'robotTemplates/robot_case_add.html', {'obj_form': case_form})
 
     def post(self, request):
@@ -271,10 +271,11 @@ class CaseAddView(View):
             name = request.POST['name']
             type = request.POST['type']
             level = request.POST['level']
-            creator = user.username
+            creator = user
             case = Cases(case_num=case_num, name=name, type=type, level=level, creator=creator)
             case.save()
-            return HttpResponse({'msg': '保存成功'})
+            # return render(request,'robotTemplates/robot_case_list.html',{'error_code':100,'msg': '保存成功'})
+            return HttpResponse({'error_code':100,'error_msg': '保存成功'})
         return render(request, 'robotTemplates/robot_case_list.html')
 
 
