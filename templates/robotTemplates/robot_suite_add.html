@@ -45,20 +45,43 @@
                         <button class="btn btn-primary" onclick="history.back(-1);" type="button">返回</button>
                     </div>
 {#                    <div class="form-group errors">{{ error }} </div>#}
-                    <script>
-                        toastr.options.positionClass = 'toast-top-center';
-                        toastr.options.showDuration = 100;
-                        $(function () {
-                            var s = 100;
-                            var f ={{ error_code }};
-                            if (s === f) {
-                                toastr.success("保存成功");
 
-                            }
-                            else {
-                                toastr.error(error_msg)
-                            }
-                        });
+                    <script>
+                        function msg(error_code){
+                            toastr.options.positionClass = 'toast-top-center';
+                            toastr.options.showDuration = 100;
+                            $(function () {
+                                var s = 100;
+                                var f =error_code|safe;
+                                
+                                if (s === f) {
+                                    toastr.success("保存成功");
+    
+                                }
+                                else {
+                                    toastr.error(error_code)
+                                }
+                            });
+                        }
+                        
+                        function addTestCase() {
+                            var post_data={};
+                            $.ajax(
+                                {
+                                    url:{% url 'case_add' %},
+                                    type:"POST",
+                                    data:post_data,
+                                    success:function (data) {
+                                        data=JSON.parse(data);
+                                                                                                                                                if (data["error_code"]==100){
+
+                                        }
+                                        
+                                    }
+                                }
+                            )
+                        }
+                        
                     </script>
                 </form>
             </div>

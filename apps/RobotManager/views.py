@@ -275,7 +275,7 @@ class CaseAddView(View):
             case = Cases(case_num=case_num, name=name, type=type, level=level, creator=creator)
             case.save()
             # return render(request,'robotTemplates/robot_case_list.html',{'error_code':100,'msg': '保存成功'})
-            return HttpResponse({'error_code':100,'error_msg': '保存成功'})
+            return HttpResponse(json.dumps({'error_code':100,'error_msg':"保存成功"}))
         return render(request, 'robotTemplates/robot_case_list.html')
 
 
